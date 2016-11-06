@@ -65,7 +65,7 @@ class BookAward(db.Model):
     award_id = db.Column(db.Integer,
                          db.ForeignKey('awards.award_id'),
                          nullable=False)
-    year = db.Column(db.DateTime)
+    year = db.Column(db.Integer, nullable=False)
 
     book = db.relationship("Book", backref="books_awards")
     award = db.relationship("Award", backref="books_awards")

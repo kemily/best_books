@@ -6,6 +6,9 @@ from sqlalchemy import func
 from model import Book, Award, BookAward, Genre, BookGenre, Author, BookAuthor, connect_to_db, db
 from server import app
 
+import os
+import sys
+
 def load_books():
     """Load books from bestbooks.csv into database."""
 
@@ -20,7 +23,7 @@ def load_books():
 
             # The date is in the file as year string;
             # we need to convert it to an actual datetime object.
-            year = datetime.datetime.strptime(year, "%Y")
+            year = int(year)
             author = author.strip()
 
             #create book object
