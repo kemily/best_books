@@ -25,6 +25,7 @@ class Book(db.Model):
     language = db.Column(db.String(15), nullable=True)
     isbn10 = db.Column(db.Integer, nullable=True)
     isbn13 = db.Column(db.Integer, nullable=True)
+    image_url=db.Column(db.String(300), nullable=True)
 
     # Define relationship to genre, through books_genres
     genres = db.relationship("Genre",
@@ -110,6 +111,7 @@ class Author(db.Model):
     __tablename__ = "authors"
 
     author_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    goodreads_author_id = db.Column(db.Integer, nullable=True)
     name = db.Column(db.String(200), nullable=False)
     # last_name = db.Column(db.String(30), nullable=False)
     biography = db.Column(db.Text)
