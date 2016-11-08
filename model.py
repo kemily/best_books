@@ -21,11 +21,11 @@ class Book(db.Model):
     title = db.Column(db.String(300), nullable=False)
     description = db.Column(db.Text)
     pages = db.Column(db.Integer, nullable=True)
-    published = db.Column(db.DateTime)
+    published = db.Column(db.Integer, nullable=True)
     language = db.Column(db.String(15), nullable=True)
-    isbn10 = db.Column(db.Integer, nullable=True)
-    isbn13 = db.Column(db.Integer, nullable=True)
-    image_url=db.Column(db.String(300), nullable=True)
+    isbn10 = db.Column(db.String(15), nullable=True)
+    isbn13 = db.Column(db.String(15), nullable=True)
+    image_url = db.Column(db.String(300), nullable=True)
 
     # Define relationship to genre, through books_genres
     genres = db.relationship("Genre",
@@ -160,3 +160,5 @@ if __name__ == "__main__":
     from server import app
     connect_to_db(app)
     print "Connected to DB."
+     # Create tables
+    # db.create_all()
