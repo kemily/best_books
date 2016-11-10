@@ -42,6 +42,15 @@ class Book(db.Model):
         """Provide helpful representation when printed."""
         return "<Book id=%s title=%s>" % (self.book_id, self.title)
 
+    def to_dict(self):
+        """Turn a book object into a dictionary to represent the book."""
+
+        return {
+            'id': self.book_id,
+            'title': self.title,
+            'url': self.image_url
+        }
+
 class Award(db.Model):
     """Book awards"""
 
@@ -50,10 +59,21 @@ class Award(db.Model):
     award_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
     description = db.Column(db.Text)
+    image_url = db.Column(db.String(300), nullable=True)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
         return "<Award id=%s name=%s>" % (self.award_id, self.name)
+
+    def to_dict(self):
+        """Turn an award object into a dictionary."""
+
+        return {
+            'id': self.award_id,
+            'name': self.name,
+            'description': self.description,
+            'url': self.image_url
+        }
 
 class BookAward(db.Model):
     """Awar of a specific book."""

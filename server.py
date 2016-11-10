@@ -17,12 +17,21 @@ app.secret_key = "ABC"
 # This is horrible. Fix this so that, instead, it raises an error.
 app.jinja_env.undefined = StrictUndefined
 
+awards = [
+    {"id": 1, "url": "/home/vagrant/src/best_books/static/pictures/ManBookerPrize1.png"},
+    {"id": 2, "url": "/home/vagrant/src/best_books/static/pictures/theeconomist3.jpg"},
+    {"id": 3, "url": "/home/vagrant/src/best_books/static/pictures/ManBookerPrize2.png"},
+    {"id": 4, "url": "/home/vagrant/src/best_books/static/pictures/nationalbookaward3.jpg"},
+    {"id": 5, "url": "/home/vagrant/src/best_books/static/pictures/TheNewYorkTimes1.png"}
+]
 
 @app.route('/')
 def index():
     """Homepage."""
 
-    return render_template("homepage.html")
+    # get list of awards dictionaries from database
+    #awards = [award.to_dict() for award in Award.query.all()]
+    return render_template("homepage.html", images=awards)
 
 
 
@@ -39,4 +48,4 @@ if __name__ == "__main__":
     DebugToolbarExtension(app)
 
     # app.run()
-    app.run(port=5000, host=0.0.0.0)
+    app.run(port=5000, host='0.0.0.0')
