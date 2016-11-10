@@ -22,7 +22,7 @@ app.jinja_env.undefined = StrictUndefined
 def index():
     """Homepage."""
 
-    print "Hello"
+    return render_template("homepage.html")
 
 
 
@@ -38,4 +38,5 @@ if __name__ == "__main__":
     # Use the DebugToolbar
     DebugToolbarExtension(app)
 
-    app.run()
+    # app.run()
+    app.run(port=5000, host=0.0.0.0)
