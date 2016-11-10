@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 	<div id="homepage-block">
-    	<h1 id="homepage-title">Best Books Awards</h1>
 
-        <p>Search by:</p>
-        <input type="text" name="titles" id="autocomplete" class="form-control" placeholder="Book title" /> 
+        <div id="search-boxes">
+            Search by:
+            <input type="text" name="titles" id="autocomplete" class="form-control" placeholder="Book title" /> 
 
-        <input type="text" name="name" id="autocomplete" class="form-control" placeholder="Author name" />
+            <input type="text" name="name" id="autocomplete" class="form-control" placeholder="Author name"/>
+        </div>
 
         <div id="awards">
             <h2>Awards!!!</h2>
             {% for image in images %}
-                <div>
+                <div class="floating-images">
                     <a href="{{ image.id }}">
                         <img src="{{ image.url }}" alt="image representing an award">
                     </a>

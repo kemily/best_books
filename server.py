@@ -18,11 +18,11 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 awards = [
-    {"id": 1, "url": "/home/vagrant/src/best_books/static/pictures/ManBookerPrize1.png"},
-    {"id": 2, "url": "/home/vagrant/src/best_books/static/pictures/theeconomist3.jpg"},
-    {"id": 3, "url": "/home/vagrant/src/best_books/static/pictures/ManBookerPrize2.png"},
-    {"id": 4, "url": "/home/vagrant/src/best_books/static/pictures/nationalbookaward3.jpg"},
-    {"id": 5, "url": "/home/vagrant/src/best_books/static/pictures/TheNewYorkTimes1.png"}
+    {"id": 1, "url": "/static/pictures/ManBookerPrize1.png"},
+    {"id": 2, "url": "/static/pictures/theeconomist3.jpg"},
+    {"id": 3, "url": "/static/pictures/ManBookerPrize2.png"},
+    {"id": 4, "url": "/static/pictures/nationalbookaward3.jpg"},
+    {"id": 5, "url": "/static/pictures/TheNewYorkTimes1.png"}
 ]
 
 @app.route('/')
@@ -46,6 +46,7 @@ if __name__ == "__main__":
 
     # Use the DebugToolbar
     DebugToolbarExtension(app)
+    app.jinja_env.auto_reload = True
 
     # app.run()
     app.run(port=5000, host='0.0.0.0')
