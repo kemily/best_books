@@ -3,10 +3,10 @@
 	<div id="homepage-block">
 
         <div id="search-boxes">
-            Search by:
-            <input type="text" name="titles" id="autocomplete" class="form-control" placeholder="Book title" /> 
+            <label for="books-autocomplete">Search by: </label>
+            <input type="text" name="titles" id="books-autocomplete" class="autocomplete" placeholder="Book title" /> 
 
-            <input type="text" name="name" id="autocomplete" class="form-control" placeholder="Author name"/>
+            <input type="text" name="names" id="authors-autocomplete" class="autocomplete" placeholder="Author name"/>
         </div>
 
         <div id="awards">
@@ -19,6 +19,10 @@
                 </div>
             {% endfor %}
         </div>
+
+        <div id="award-years"></div>
+        <div id="books"></div>
+        <div id="book-info"></div>
 
 	</div>
 

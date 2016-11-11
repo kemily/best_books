@@ -4,6 +4,7 @@ from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
+from flask import jsonify
 
 from model import connect_to_db, db, Book, Award, BookAward, Genre, BookGenre, Author, BookAuthor
 
@@ -30,10 +31,27 @@ def index():
     """Homepage."""
 
     # get list of awards dictionaries from database
-    #awards = [award.to_dict() for award in Award.query.all()]
+    # awards = [award.to_dict() for award in Award.query.all()]
     return render_template("homepage.html", images=awards)
 
 
+@app.route("/book-auto-complete", methods=["GET"])
+def book_auto_complete():
+    # search = request.args.get('value')
+
+    #titles = db.session.query(Book.title).filter(Book.title.contains(search)).all()
+    titles = db.session.query(Book.title).all()
+    # create an empty list to append titles from the tuples
+    books_titles = []
+
+    # iterate over the list and, make each tuple a list, append the fist element
+    # which is book title, to the books_titles
+    for item in titles:
+        title = list(item)
+        # print title[0]
+        books_titles.append(title[0])
+
+    return jsonify(titles_list=books_titles)
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
