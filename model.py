@@ -48,7 +48,12 @@ class Book(db.Model):
         return {
             'id': self.book_id,
             'title': self.title,
-            'url': self.image_url
+            'url': self.image_url,
+            'description': self.description,
+            'pages': self.pages,
+            'published': self.published,
+            'language': self.language,
+            'image_url': self.image_url
         }
 
 class Award(db.Model):

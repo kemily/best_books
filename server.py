@@ -37,9 +37,8 @@ def index():
 
 @app.route("/book-auto-complete", methods=["GET"])
 def book_auto_complete():
-    # search = request.args.get('value')
 
-    #titles = db.session.query(Book.title).filter(Book.title.contains(search)).all()
+    # gets all the title tuples from the books table
     titles = db.session.query(Book.title).all()
     # create an empty list to append titles from the tuples
     books_titles = []
@@ -51,7 +50,18 @@ def book_auto_complete():
         # print title[0]
         books_titles.append(title[0])
 
+    # returning a books titles list
     return jsonify(titles_list=books_titles)
+
+@app.route("/get-book-info", methods=["GET"])
+def book_auto_complete():
+
+    # gets a book title from the get request
+    book_title = request.form.get("title")
+
+    
+
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point

@@ -2,13 +2,14 @@
 
 $(function () { // this is the jquery shortcut for document.ready()
 
+    // when the page is loaded the 
     function bookAutoComplete(evt) {
         console.log("doing autocomplete magic!");
 
-        $.get("/book-auto-complete", ShowAutoComplete);
+        $.get("/book-auto-complete", showAutoComplete);
     }
 
-    function ShowAutoComplete(result) {
+    function showAutoComplete(result) {
 
         console.log("YAY!");
 
@@ -16,7 +17,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $('#books-autocomplete').autocomplete({
             source: titles,
-            minLength: 2
+            minLength: 1
         }); // give our user auto complete
 
     }
@@ -24,13 +25,34 @@ $(function () { // this is the jquery shortcut for document.ready()
     var functionCall = bookAutoComplete();
 });
 
-$(function () {
-    $('#books-autocomplete').autocomplete({
-         source: ;
-    });
+$(function (){
+
+    function submitSelectedREsults(evt, result) {
+        console.log("submitting the result to the server!");
+        alert("submitting the result to the server!");
+
+        var title = result.item.value;
+        $.get("/get-book-info", {"title": title}, showBookInfo);
+
+        // $.get("/book-auto-complete", ShowAutoComplete);
+    }
+
+    function showBookInfo(result) {
+
+    }
+
+    $("#books-autocomplete").on( "autocompleteselect", submitSelectedREsults);
 });
 
+// $(function () {
 
+//     $( "#books-autocomplete" ).on( "autocompleteresponse", function (a, b) {
+//                             alert("response");
+//                         });
+
+// });
+
+// $("#book-info").html(title);
 
 // ///////////////////////////////// EXTRA STUFF ////////////////////////
 
