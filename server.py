@@ -6,6 +6,8 @@ from flask import Flask, render_template, request, flash, redirect, session
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import jsonify
 
+from sqlalchemy import func
+
 from model import connect_to_db, db, Book, Award, BookAward, Genre, BookGenre, Author, BookAuthor
 
 
@@ -37,6 +39,7 @@ def index():
 
 @app.route("/book-auto-complete", methods=["GET"])
 def book_auto_complete():
+    """Return a list of all the book titles list that are currently in the database"""
 
     # gets all the title tuples from the books table
     titles = db.session.query(Book.title).all()
@@ -54,12 +57,32 @@ def book_auto_complete():
     return jsonify(titles_list=books_titles)
 
 @app.route("/get-book-info", methods=["GET"])
-def book_auto_complete():
+def get_book_info():
+    """Return info about a book as JSON"""
 
     # gets a book title from the get request
     book_title = request.form.get("title")
 
-    
+    # # getting a book row from books table by current title
+    # book = Book.query.filter(func.lower(Book.title) == func.lower(book_title)).first()
+    # return jsonify(book.to_dict())
+
+    # getting a book row from books table by current title
+    book_info = Book.query.filter(func.lower(Book.title) == func.lower(book_title)).first()
+
+    # creating a current book dictionary with the corresponding data,
+    # so it can be returned as JSON
+    book = {
+        "id": book_info.book_id,
+        'title': book_info.title,
+        'url': book_info.image_url,
+        'description': book_info.description,
+        'pages': book_info.pages,
+        'published': book_info.published,
+        'language': book_info.language
+    }
+
+    return jsonify(book)
 
 
 

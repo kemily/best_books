@@ -33,24 +33,21 @@ $(function (){
 
         var title = result.item.value;
         $.get("/get-book-info", {"title": title}, showBookInfo);
-
-        // $.get("/book-auto-complete", ShowAutoComplete);
     }
 
     function showBookInfo(result) {
-
+        console.log("Hey " + result.title);
+        var id = result.id;
+        var title = result.title;
+        var image = result.url;
+        $('#book_image').attr('src', image);
+        $('#book_title').append(title);
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedREsults);
 });
 
-// $(function () {
 
-//     $( "#books-autocomplete" ).on( "autocompleteresponse", function (a, b) {
-//                             alert("response");
-//                         });
-
-// });
 
 // $("#book-info").html(title);
 

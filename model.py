@@ -52,8 +52,7 @@ class Book(db.Model):
             'description': self.description,
             'pages': self.pages,
             'published': self.published,
-            'language': self.language,
-            'image_url': self.image_url
+            'language': self.language
         }
 
 class Award(db.Model):

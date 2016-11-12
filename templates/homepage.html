@@ -21,8 +21,22 @@
         </div>
 
         <div id="award-years"></div>
-        <div id="books"></div>
-        <div id="book-info"></div>
+        <div id="books">
+            {% for book in books %}
+            <div>
+                <img src="{{ image.url }}" alt="a pretty image you can favorite">
+                <button id="{{ image.id }}" class="favorite-btn">&hearts; Favorite</button>
+            </div>
+            {% endfor %}
+        </div>
+        <div id="book-info">
+                <h3 id="book_title">
+                    {{ image.title }}
+                </h3>
+                <p>
+                    <img id="book_image" src="{{ image.url }}" alt="a pretty image of your selected book">
+                </p>
+        </div>
 
 	</div>
 

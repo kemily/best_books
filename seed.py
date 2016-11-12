@@ -64,7 +64,7 @@ def load_books():
                     db.session.commit()
 
             #create book genre object
-            get_book_genre = BookGenre.query.filter(BookGenre.book_id == book.book_id, 
+            get_book_genre = BookGenre.query.filter(BookGenre.book_id == book.book_id,
                                                     BookGenre.genre_id == new_genre.genre_id).first()
             if not get_book_genre:
                 books_genres = BookGenre(book_id=book.book_id,
