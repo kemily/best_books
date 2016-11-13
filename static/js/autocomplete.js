@@ -32,6 +32,7 @@ $(function (){
         alert("submitting the result to the server!");
 
         var title = result.item.value;
+        console.log(title);
         $.get("/get-book-info", {"title": title}, showBookInfo);
     }
 
@@ -40,8 +41,11 @@ $(function (){
         var id = result.id;
         var title = result.title;
         var image = result.url;
+        console.log(image);
+        
         $('#book_image').attr('src', image);
         $('#book_title').append(title);
+        $('#book-info').css('display', 'block');
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedREsults);
