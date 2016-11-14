@@ -55,6 +55,7 @@ $(function (){
         $('#pages').html("Handcover, " + pages + " pages");
         $('#published').html("Published in " + published);
         $('#book-info').css('display', 'block');
+        $("#books-autocomplete").val("");
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedREsults);
@@ -69,6 +70,14 @@ $(function (){
         var id = this.id; // this is the id on the image we clicked
         console.log("the id is " + id);
 
+        // if any of the info from the book search of books search by author is 
+        // still on the page, it should disappear when an eward is choosen 
+        $("#book-info").empty();
+        $("#book-info").css('display', '');
+
+        $("#books").empty();
+        $("#books").css('display', 'none');
+
         $.get("/get-award-year", {'id': id}, showAwardYears);
     }
 
@@ -77,13 +86,18 @@ $(function (){
         console.log("Here is the result");
 
         var years = result.years_list;
+
+
         $('#award-years').html('Years: ' + years);
+
+        for (var i = 0; i < years.length; i++) {
+            $('#award-years').append("<a>" + years[i] + "</a>" + "<br>");
+        }
     }
 
     $('.award-image').click(getAwardYears);
 });
 
-// $("#book-info").html(title);
 
 // ///////////////////////////////// EXTRA STUFF ////////////////////////
 
