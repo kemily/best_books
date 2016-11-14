@@ -78,6 +78,12 @@ $(function (){
         $("#books").empty();
         $("#books").css('display', 'none');
 
+        // since we are usuing append for the years buttons, every time when 
+        // award is clicked we are cleaning the previous years from the div 
+        // and appending the new ones
+        $("#award-years").empty();
+        // $("#award-years").css('display', 'none');
+
         $.get("/get-award-year", {'id': id}, showAwardYears);
     }
 
@@ -88,10 +94,10 @@ $(function (){
         var years = result.years_list;
 
 
-        $('#award-years').html('Years: ' + years);
+        // $('#award-years').html('Years: ' + years);
 
         for (var i = 0; i < years.length; i++) {
-            $('#award-years').append("<a>" + years[i] + "</a>" + "<br>");
+            $('#award-years').append("<button id="+ years[i] + " class='year-button'>" + years[i] + "</button>" + "  ");
         }
     }
 
