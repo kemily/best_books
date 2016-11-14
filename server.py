@@ -115,6 +115,8 @@ def get_award_year():
         year = list(item)
         years.append(year[0])
 
+    years = list(set(years))
+
     # returning an award years list
     return jsonify(years_list=years)
 

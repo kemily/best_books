@@ -29,7 +29,6 @@ $(function (){
 
     function submitSelectedREsults(evt, result) {
         console.log("submitting the result to the server!");
-        alert("submitting the result to the server!");
 
         var title = result.item.value;
         console.log(title);
@@ -65,10 +64,10 @@ $(function (){
 
     function getAwardYears(evt) {
         evt.preventDefault();
-        
         console.log("Getting years from the server");
 
         var id = this.id; // this is the id on the image we clicked
+        console.log("the id is " + id);
 
         $.get("/get-award-year", {'id': id}, showAwardYears);
     }
