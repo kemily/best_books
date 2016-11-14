@@ -50,7 +50,6 @@ def book_auto_complete():
     # which is book title, to the books_titles
     for item in titles:
         title = list(item)
-        # print title[0]
         books_titles.append(title[0])
 
     # returning a books titles list
@@ -70,28 +69,54 @@ def get_book_info():
     # getting a book row from books table by current title
     book_info = Book.query.filter(func.lower(Book.title) == func.lower(book_title)).first()
 
-    title = book_info.title
-    url = book_info.image_url
+    # get list of authors objects
+    book_authors = book_info.authors
 
-    book = {
-        "title": title,
-        'url': url
-    }
+
+    if len(book_authors) > 1:
+        authors = []
+        for author in book_authors:
+            authors.append(author.name)
+    else:
+        authors = book_authors[0].name
+
+    # get list of authors dictionaries
+    # authors = [author.to_dict() for author in book_authors]
 
     # creating a current book dictionary with the corresponding data,
     # so it can be returned as JSON
-    # book = {
-    #     "id": book_info.book_id,
-    #     'title': book_info.title,
-    #     'url': book_info.image_url,
-    #     'description': book_info.description,
-    #     'pages': book_info.pages,
-    #     'published': book_info.published,
-    #     'language': book_info.language
-    # }
+    book = {
+        "id": book_info.book_id,
+        'title': book_info.title,
+        'url': book_info.image_url,
+        'description': book_info.description,
+        'pages': book_info.pages,
+        'published': book_info.published,
+        'author': authors
+    }
 
     return jsonify(book)
 
+@app.route("/get-award-year", methods=["GET"])
+def get_award_year():
+    """Return info about award years as JSON"""
+
+    # gets award's id from the get request
+    awardYear = request.args.get("id")
+
+    # gets all the award's years tuples from the BooksAward table
+    award_years = db.session.query(BookAward.year).filter(BookAward.award_id == awardYear).all()
+
+    years = []
+
+    # iterate over the list and, make each tuple a list, append the fist element
+    # which is award, to the books_titles
+    for item in award_years:
+        year = list(item)
+        years.append(year[0])
+
+    # returning an award years list
+    return jsonify(years_list=years)
 
 
 if __name__ == "__main__":

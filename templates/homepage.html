@@ -13,7 +13,7 @@
             <h2>Awards!!!</h2>
             {% for image in images %}
                 <div class="floating-images">
-                    <a href="{{ image.id }}">
+                    <a href="{{ image.id }}" class="award-image">
                         <img src="{{ image.url }}" alt="image representing an award">
                     </a>
                 </div>
@@ -25,11 +25,14 @@
         </div>
         <div id="book-info">
                 <h3 id="book_title">
-                    
                 </h3>
                 <p>
                     <img id="book_image" src=" " alt="a pretty image of your selected book">
                 </p>
+                <p id="authors"></p>
+                <p id="description"></p>
+                <p id="pages"></p>
+                <p id="published"></p>
         </div>
 
 	</div>

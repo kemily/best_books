@@ -146,6 +146,16 @@ class Author(db.Model):
 
         return "<Author author_id=%s name=%s>" % (self.author_id, self.name)
 
+    def to_dict(self):
+        """Turn an author object into a dictionary to represent the author."""
+
+        return {
+            'authorId': self.author_id,
+            'name': self.name,
+            'biography': self.biography,
+            'goodreadsAuthorId': self.goodreads_author_id
+        }
+
 class BookAuthor(db.Model):
     """Author of a specific book."""
 

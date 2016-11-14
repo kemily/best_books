@@ -41,17 +41,48 @@ $(function (){
         var id = result.id;
         var title = result.title;
         var image = result.url;
-        console.log(image);
+        var description = result.description;
+        var pages = result.pages;
+        var published = result.published;
+        var authors = result.author;
         
+        // Array.isArray(authors);
+        console.log(title, image, authors);
+
         $('#book_image').attr('src', image);
-        $('#book_title').append(title);
+        $('#book_title').html(title);
+        $('#authors').html("by " + authors);
+        $('#description').html(description);
+        $('#pages').html("Handcover, " + pages + " pages");
+        $('#published').html("Published in " + published);
         $('#book-info').css('display', 'block');
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedREsults);
 });
 
+$(function (){
 
+    function getAwardYears(evt) {
+        evt.preventDefault();
+        
+        console.log("Getting years from the server");
+
+        var id = this.id; // this is the id on the image we clicked
+
+        $.get("/get-award-year", {'id': id}, showAwardYears);
+    }
+
+    function showAwardYears(result) {
+
+        console.log("Here is the result");
+
+        var years = result.years_list;
+        $('#award-years').html('Years: ' + years);
+    }
+
+    $('.award-image').click(getAwardYears);
+});
 
 // $("#book-info").html(title);
 
