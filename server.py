@@ -117,8 +117,27 @@ def get_award_year():
 
     years = list(set(years))
 
+    # appending awardId as a last element of the list, so we can use it in future
+    years.append(awardYear)
+
     # returning an award years list
     return jsonify(years_list=years)
+
+
+@app.route("/get-books", methods=["GET"])
+def get_books():
+    """Return info about award books base on choosen year as JSON"""
+
+    # gets choosen year from the get request
+    awardYear = request.args.get("year")
+    awardId = request.args.get("award_id")
+
+    # getting a book row from books table by the chosen year and award
+    award_books = BookAward.query(BookAward.book).filter(BookAward.year == awardYear, BookAward.award_id == awardId).all()
+
+    # getting list of books objects from the database
+    books = [book.to_dict() for book in award_books]
+
 
 
 if __name__ == "__main__":

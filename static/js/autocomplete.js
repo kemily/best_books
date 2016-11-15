@@ -23,13 +23,13 @@ $(function () { // this is the jquery shortcut for document.ready()
     }
 
     var functionCall = bookAutoComplete();
-});
 
-$(function (){
 
-    function submitSelectedREsults(evt, result) {
+
+    function submitSelectedResults(evt, result) {
         console.log("submitting the result to the server!");
-
+        
+        $('#book-info').show();
         var title = result.item.value;
         console.log(title);
         $.get("/get-book-info", {"title": title}, showBookInfo);
@@ -45,38 +45,42 @@ $(function (){
         var published = result.published;
         var authors = result.author;
         
-        // Array.isArray(authors);
+    
         console.log(title, image, authors);
 
+        $("#award-years").hide();
+        // $("#award-years").css('display', 'none');
         $('#book_image').attr('src', image);
         $('#book_title').html(title);
         $('#authors').html("by " + authors);
         $('#description').html(description);
         $('#pages').html("Handcover, " + pages + " pages");
         $('#published').html("Published in " + published);
-        $('#book-info').css('display', 'block');
+        
         $("#books-autocomplete").val("");
+
+        console.log($("#books-autocomplete").val(""));
     }
 
-    $("#books-autocomplete").on( "autocompleteselect", submitSelectedREsults);
-});
+    $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
 
-$(function (){
+
 
     function getAwardYears(evt) {
         evt.preventDefault();
         console.log("Getting years from the server");
+
 
         var id = this.id; // this is the id on the image we clicked
         console.log("the id is " + id);
 
         // if any of the info from the book search of books search by author is 
         // still on the page, it should disappear when an eward is choosen 
-        $("#book-info").empty();
-        $("#book-info").css('display', '');
+        $("#book-info").hide();
+        // $("#book-info").css('display', '');
 
-        $("#books").empty();
-        $("#books").css('display', 'none');
+        $("#books").hide();
+        // $("#books").css('display', 'none');
 
         // since we are usuing append for the years buttons, every time when 
         // award is clicked we are cleaning the previous years from the div 
@@ -88,20 +92,44 @@ $(function (){
     }
 
     function showAwardYears(result) {
-
-        console.log("Here is the result");
+        $("#award-years").show();
 
         var years = result.years_list;
 
-
-        // $('#award-years').html('Years: ' + years);
-
-        for (var i = 0; i < years.length; i++) {
-            $('#award-years').append("<button id="+ years[i] + " class='year-button'>" + years[i] + "</button>" + "  ");
+        for (var i = 0; i < years.length -1; i++) {
+            $('#award-years').append("<button id="+ years[i] + " data-award=" + years[years.length-1] + " class='year-button'>" + years[i] + "</button>" + "   ");
         }
+
+        // adding an event listener to the newly created buttons right away within
+        // this current function, other wise JS will ignore it outside of the function
+        // scope, since the buttons are existing in the html, but created as a result of 
+        // award choosing
+        $('.year-button').on("click", getBooks);
+
     }
 
     $('.award-image').click(getAwardYears);
+
+
+
+    function getBooks(evt) {
+        console.log("Getting books from the server");
+
+        var award_year = this.id; // this is the id on the year we clicked
+        var award_id = $(this).attr("data-award");
+
+        var awardInfo = {
+            'year': award_year,
+            'award_id': award_id
+        };
+
+        console.log(awardInfo);
+
+        $.get("/get-books", awardInfo, showYearBooks);
+    }
+
+    
+    
 });
 
 

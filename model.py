@@ -197,3 +197,52 @@ if __name__ == "__main__":
     print "Connected to DB."
      # Create tables
     # db.create_all()
+
+
+##############################################################################
+# Example data
+
+def example_data():
+
+    Book.query.delete()
+    Award.query.delete()
+    BookAward.query.delete()
+    Genre.query.delete()
+    BookGenre.query.delete()
+    Author.query.delete()
+    BookAuthor.query.delete()
+
+
+    new_book = User(user_id = 1, 
+                    f_name = "Test", 
+                    l_name = "User",
+                    email = "emmaonthursday@gmail.com",
+                    password = "Goodreads",
+                    goodreads_uid = 16767050,
+                    rec_frequency = 1,
+                    sign_up_date = "01-01-2016",
+                    paused = 0)
+    
+    new_book = Book(book_id = 1,
+                    isbn = "9780375760648",
+                    title = "War and Peace",
+                    author = "Leo Tolstoy",
+                    goodreads_bid = 18243)
+
+    new_userbook = UserBook(userbook_id = 1,
+                            book_id = 1,
+                            user_id = 1,
+                            status = "read",
+                            source = "nextbook",
+                            rating = "5")
+
+    new_recommendation = Recommendation(rec_id = 1,
+                        userbook_id = 1,
+                        date_created = "02-01-2016",
+                        date_provided = "02-29-2016",
+                        response = "read_now")
+
+    db.session.add_all([new_book, new_user, new_userbook, new_recommendation])
+
+    db.session.commit()
+
