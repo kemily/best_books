@@ -196,7 +196,7 @@ if __name__ == "__main__":
     connect_to_db(app)
     print "Connected to DB."
      # Create tables
-    db.create_all()
+    # db.create_all()
 
 
 ##############################################################################

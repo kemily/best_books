@@ -115,6 +115,8 @@ $(function () { // this is the jquery shortcut for document.ready()
     function getBooks(evt) {
         console.log("Getting books from the server");
 
+        $("#books").empty();
+
         var award_year = this.id; // this is the id on the year we clicked
         var award_id = $(this).attr("data-award");
 
@@ -128,6 +130,26 @@ $(function () { // this is the jquery shortcut for document.ready()
         $.get("/get-books", awardInfo, showYearBooks);
     }
 
+
+    function showYearBooks(result) {
+
+        var books = result.books_list;
+
+        for (var i = 0; i < books.length; i++) {
+            var image = books[i].url;
+            var title = books[i].title;
+            var book_id = books[i].id;
+
+            $('#books').append("<span id= " + book_id + "><img src=" + image + " alt=" + title + " class='book-image'><h5>" + title + "</h5></span>");
+        }
+
+        // adding an event listener to the newly created buttons right away within
+        // this current function, other wise JS will ignore it outside of the function
+        // scope, since the buttons are existing in the html, but created as a result of 
+        // award choosing
+        // $('.year-button').on("click", getBooks);
+
+    }
 
     
 });
