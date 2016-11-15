@@ -133,6 +133,8 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     function showYearBooks(result) {
 
+        $("#books").show();
+
         var books = result.books_list;
 
         for (var i = 0; i < books.length; i++) {
@@ -140,7 +142,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             var title = books[i].title;
             var book_id = books[i].id;
 
-            $('#books').append("<span id= " + book_id + "><img src=" + image + " alt=" + title + " class='book-image'><h5>" + title + "</h5></span>");
+            console.log(title);
+
+            $('#books').append("<span id= " + book_id + "><img src=" + image + " alt='book image' class='book-image'><h5>" + title + "</h5></span>");
         }
 
         // adding an event listener to the newly created buttons right away within
