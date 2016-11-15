@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
 # object, where we do most of our interactions (like committing, etc.)
-# when creating db make sure to create it with  code - createdb -E UTF8 -T template0 --locale=en_US.utf8 <name>
+# when creating db make sure to create it with  code :   createdb -E UTF8 -T template0 --locale=en_US.utf8 <name>
 
 db = SQLAlchemy()
 
@@ -100,7 +100,7 @@ class BookAward(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<BookA book_id=%s award_id=%s year=%s>" % (self.book_id, self.genre_id, self.year)
+        return "<BookA book_id=%s award_id=%s year=%s>" % (self.book_id, self.award_id, self.year)
 
 
 class Genre(db.Model):
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     connect_to_db(app)
     print "Connected to DB."
      # Create tables
-    # db.create_all()
+    db.create_all()
 
 
 ##############################################################################
@@ -213,36 +213,49 @@ def example_data():
     BookAuthor.query.delete()
 
 
-    new_book = User(user_id = 1, 
-                    f_name = "Test", 
-                    l_name = "User",
-                    email = "emmaonthursday@gmail.com",
-                    password = "Goodreads",
-                    goodreads_uid = 16767050,
-                    rec_frequency = 1,
-                    sign_up_date = "01-01-2016",
-                    paused = 0)
-    
-    new_book = Book(book_id = 1,
-                    isbn = "9780375760648",
-                    title = "War and Peace",
-                    author = "Leo Tolstoy",
-                    goodreads_bid = 18243)
+    new_book = Book(
+                    title="War and Peace",
+                    description="A great art by Leo Tolstoy",
+                    pages=230,
+                    published=2005,
+                    language="en",
+                    isbn10="9780375760648",
+                    isbn13="869403-13",
+                    image_url="some url")
 
-    new_userbook = UserBook(userbook_id = 1,
-                            book_id = 1,
-                            user_id = 1,
-                            status = "read",
-                            source = "nextbook",
-                            rating = "5")
+    new_author = Author(
+                        goodreads_author_id=456,
+                        name="Leo Tolstoy",
+                        biography="Leo Tolstoy is a famous Russian author")
 
-    new_recommendation = Recommendation(rec_id = 1,
-                        userbook_id = 1,
-                        date_created = "02-01-2016",
-                        date_provided = "02-29-2016",
-                        response = "read_now")
+    new_award = Award(
+                      name="The New York Times",
+                      description="The NYT newspaper is a big publication that every year sets the best 10 books of the year",
+                      image_url="award_url")
 
-    db.session.add_all([new_book, new_user, new_userbook, new_recommendation])
+    new_genre = Genre(
+                      genre="Fiction")
 
+    db.session.add_all([new_book, new_award, new_genre, new_author])
     db.session.commit()
 
+
+    new_bookaward = BookAward(
+                              book_id=1,
+                              award_id=1,
+                              year=2010)
+
+    new_genre = Genre(
+                      genre="Fiction")
+
+    new_bookgenre = BookGenre(
+                              book_id=1,
+                              genre_id=1)
+
+    new_bookauthor = BookAuthor(
+                                book_id=1,
+                                author_id=1)
+
+    db.session.add_all([new_bookaward, new_genre, new_bookgenre, new_bookauthor])
+
+    db.session.commit()
