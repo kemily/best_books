@@ -1,5 +1,7 @@
 // AJAX for Best Books
 
+///////////////////// LOADING AUTOCOMPLETE ////////////////////////
+
 $(function () { // this is the jquery shortcut for document.ready()
 
     // when the page is loaded the 
@@ -25,11 +27,14 @@ $(function () { // this is the jquery shortcut for document.ready()
     var functionCall = bookAutoComplete();
 
 
+//////////// SUBMITTING AND SHOWING BOOK INFO BASE ON SEARCH FROM AUTOCOMPLETE ///////////
 
     function submitSelectedResults(evt, result) {
         console.log("submitting the result to the server!");
         
         $('#book-info').show();
+        $("#award-years").hide();
+        $("#books").hide();
         var title = result.item.value;
         console.log(title);
         $.get("/get-book-info", {"title": title}, showBookInfo);
@@ -47,9 +52,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         
     
         console.log(title, image, authors);
-
-        $("#award-years").hide();
-        // $("#award-years").css('display', 'none');
+    
         $('#book_image').attr('src', image);
         $('#book_title').html(title);
         $('#authors').html("by " + authors);
@@ -65,6 +68,7 @@ $(function () { // this is the jquery shortcut for document.ready()
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
 
 
+//////////// SUBMITTING AND SHOWING AWARD YEARS BASE ON CHOSEN AWARD ///////////
 
     function getAwardYears(evt) {
         evt.preventDefault();
@@ -111,6 +115,8 @@ $(function () { // this is the jquery shortcut for document.ready()
     $('.award-image').click(getAwardYears);
 
 
+/////// SUBMITTING AND SHOWING BOOKS LIST BASE ON CHOSEN YEAR WITHIN CHOSEN AWARD ////////
+
 
     function getBooks(evt) {
         console.log("Getting books from the server");
@@ -135,25 +141,40 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $("#books").show();
 
-        var books = result.books_list;
+        var year_books = result.books_list;
 
-        for (var i = 0; i < books.length; i++) {
-            var image = books[i].url;
-            var title = books[i].title;
-            var book_id = books[i].id;
+        for (var i = 0; i < year_books.length; i++) {
+            var image = year_books[i].url;
+            var title = year_books[i].title;
+            var book_id = year_books[i].id;
 
             console.log(title);
 
-            $('#books').append("<span id= " + book_id + "><img src=" + image + " alt='book image' class='book-image'><h5>" + title + "</h5></span>");
+            $('#books').append("<span id= " + book_id + " class='books'><img src=" + image + " alt='Pretty book image' class='book-image'><h5>" + title + "</h5></span>");
         }
 
-        // adding an event listener to the newly created buttons right away within
-        // this current function, other wise JS will ignore it outside of the function
-        // scope, since the buttons are existing in the html, but created as a result of 
-        // award choosing
-        // $('.year-button').on("click", getBooks);
+        // adding an event listener to the newly created books list right away within
+        // this current function, otherwise JS will ignore it outside of the function
+        // scope, since the books are existing in the html, but created as a result of 
+        // year choosing
+        $('.books').on("click", getBook);
 
     }
+
+
+///////// SUBMITTING AND SHOWING A BOOK INFO BASE ON SEARCH FROM BOOK LIST ///////////
+
+    function getBook(evt) {
+        console.log("Getting book from the server");
+        $("#book-info").show();
+
+        var book_title = $(this).text();
+
+        console.log(book_title);
+
+        $.get("/get-book-info", {"title": book_title}, showBookInfo); 
+    }
+
 
     
 });

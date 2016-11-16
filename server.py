@@ -63,16 +63,14 @@ def get_book_info():
     book_title = request.args.get("title")
 
     # # getting a book row from books table by current title
-    # book = Book.query.filter(func.lower(Book.title) == func.lower(book_title)).first()
-    # return jsonify(book.to_dict())
-
-    # getting a book row from books table by current title
     book_info = Book.query.filter(func.lower(Book.title) == func.lower(book_title)).first()
+    book = book_info.to_dict()
 
     # get list of authors objects
     book_authors = book_info.authors
 
-
+    # checking if a chosen books one author or multiple
+    # base on that will add author(s) to the current book dictionary
     if len(book_authors) > 1:
         authors = []
         for author in book_authors:
@@ -80,20 +78,8 @@ def get_book_info():
     else:
         authors = book_authors[0].name
 
-    # get list of authors dictionaries
-    # authors = [author.to_dict() for author in book_authors]
-
-    # creating a current book dictionary with the corresponding data,
-    # so it can be returned as JSON
-    book = {
-        "id": book_info.book_id,
-        'title': book_info.title,
-        'url': book_info.image_url,
-        'description': book_info.description,
-        'pages': book_info.pages,
-        'published': book_info.published,
-        'author': authors
-    }
+    # adding author to the book dictionary
+    book['author'] = authors
 
     return jsonify(book)
 
