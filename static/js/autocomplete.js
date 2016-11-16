@@ -1,12 +1,12 @@
 // AJAX for Best Books
 
-///////////////////// LOADING AUTOCOMPLETE ////////////////////////
+///////////////////// LOADING BOOK AUTOCOMPLETE ////////////////////////
 
 $(function () { // this is the jquery shortcut for document.ready()
 
     // when the page is loaded the 
     function bookAutoComplete(evt) {
-        console.log("doing autocomplete magic!");
+        console.log("doing book autocomplete magic!");
 
         $.get("/book-auto-complete", showAutoComplete);
     }
@@ -25,6 +25,33 @@ $(function () { // this is the jquery shortcut for document.ready()
     }
 
     var functionCall = bookAutoComplete();
+
+
+
+///////////////////// LOADING AUTHOR AUTOCOMPLETE ////////////////////////
+
+
+// when the page is loaded the 
+    function authorAutoComplete(evt) {
+        console.log("doing author autocomplete magic!");
+
+        $.get("/author-auto-complete", showAuthorAutoComplete);
+    }
+
+    function showAuthorAutoComplete(result) {
+
+        console.log("Showing author's book");
+
+        var names = result.names_list;
+
+        $('#authors-autocomplete').autocomplete({
+            source: names,
+            minLength: 1
+        }); // give our user auto complete
+
+    }
+
+    var authorCall = authorAutoComplete();
 
 
 //////////// SUBMITTING AND SHOWING BOOK INFO BASE ON SEARCH FROM AUTOCOMPLETE ///////////
@@ -67,8 +94,53 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
 
+//////////// SUBMITTING AND SHOWING BOOKS LIST BASE ON SEARCH FROM AUTHOR AUTOCOMPLETE ///////////
+
+    function submitSelectedAuthor(evt, result) {
+        
+        console.log("submitting the author to the server!");
+        
+        $('#book-info').hide();
+        $("#award-years").hide();
+        $("#books").hide();
+
+        var name = result.item.value;
+        console.log(name);
+
+        $.get("/get-author-books", {"name": name}, showBooks);
+    }
+
+    // function showBookInfo(result) {
+    //     console.log("Hey " + result.title);
+    //     var id = result.id;
+    //     var title = result.title;
+    //     var image = result.url;
+    //     var description = result.description;
+    //     var pages = result.pages;
+    //     var published = result.published;
+    //     var authors = result.author;
+        
+    
+    //     console.log(title, image, authors);
+    
+    //     $('#book_image').attr('src', image);
+    //     $('#book_title').html(title);
+    //     $('#authors').html("by " + authors);
+    //     $('#description').html(description);
+    //     $('#pages').html("Handcover, " + pages + " pages");
+    //     $('#published').html("Published in " + published);
+        
+    //     $("#books-autocomplete").val("");
+
+    //     console.log($("#books-autocomplete").val(""));
+    // }
+
+    $("#authors-autocomplete").on( "autocompleteselect", submitSelectedAuthor);
+
+
 
 //////////// SUBMITTING AND SHOWING AWARD YEARS BASE ON CHOSEN AWARD ///////////
+
 
     function getAwardYears(evt) {
         evt.preventDefault();
@@ -172,7 +244,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         console.log(book_title);
 
-        $.get("/get-book-info", {"title": book_title}, showBookInfo); 
+        $.get("/get-book-info", {"title": book_title}, showBookInfo);
     }
 
 

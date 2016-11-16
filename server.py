@@ -55,6 +55,25 @@ def book_auto_complete():
     # returning a books titles list
     return jsonify(titles_list=books_titles)
 
+@app.route("/author-auto-complete", methods=["GET"])
+def author_auto_complete():
+    """Return a list of all authors list that are currently in the database"""
+
+    # gets all the author tuples from the authors table
+    authors = db.session.query(Author.name).all()
+    # create an empty list to append authors names from the tuples
+    authors_names = []
+
+    # iterate over the list and, make each tuple a list, append the fist element
+    # which is author's name, to the authors_names
+    for item in authors:
+        name = list(item)
+        authors_names.append(name[0])
+
+    # returning a books titles list
+    return jsonify(names_list=authors_names)
+
+
 @app.route("/get-book-info", methods=["GET"])
 def get_book_info():
     """Return info about a book as JSON"""
@@ -82,6 +101,26 @@ def get_book_info():
     book['author'] = authors
 
     return jsonify(book)
+
+# @app.route("/get-author-books", methods=["GET"])
+# def get_author_books():
+#     """Return list of the books byt the chosen author as JSON"""
+
+#     # gets choosen author name from the get request
+#     author_name = request.args.get("name")
+
+#     # getting an author object from authors table by the chosen name
+#     author = Author.query.filter(Author.name == author_name).first()
+
+#     get_id = author.author_id
+
+#     books = BookAuthor.query.filter(BookAuthor.author_id == get_id).all()
+
+#     # getting list of books objects from the database
+#     books = [book_object.book.to_dict() for book_object in award_books]
+
+#     return jsonify(books_list=books)
+
 
 @app.route("/get-award-year", methods=["GET"])
 def get_award_year():
@@ -125,6 +164,7 @@ def get_books():
     books = [book_object.book.to_dict() for book_object in award_books]
 
     return jsonify(books_list=books)
+
 
 
 

@@ -138,7 +138,6 @@ class Author(db.Model):
     author_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     goodreads_author_id = db.Column(db.Integer, nullable=True)
     name = db.Column(db.String(200), nullable=False)
-    # last_name = db.Column(db.String(30), nullable=False)
     biography = db.Column(db.Text)
 
     def __repr__(self):

@@ -171,5 +171,5 @@ if __name__ == "__main__":
     db.create_all()
 
     load_api_books()
-    #load_goodreads_author_id()
-    # load_author_bio()
+    load_goodreads_author_id()
+    load_author_bio()
