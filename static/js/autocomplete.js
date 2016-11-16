@@ -77,7 +77,12 @@ $(function () { // this is the jquery shortcut for document.ready()
         var published = result.published;
         var authors = result.author;
         
-    
+        if (image.includes("/assets/nophoto/book/")) {
+            image = "https://placekitten.com/g/250/400";
+        } else if (image === null) {
+            image = "https://placekitten.com/g/250/400";
+        }
+
         console.log(title, image, authors);
     
         $('#book_image').attr('src', image);
@@ -89,7 +94,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         
         $("#books-autocomplete").val("");
 
-        console.log($("#books-autocomplete").val(""));
+        console.log( "authocomplete is empty - "  +  $("#books-autocomplete").val(""));
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
@@ -103,6 +108,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book-info').hide();
         $("#award-years").hide();
         $("#books").hide();
+        $("#books").empty();
 
         var name = result.item.value;
         console.log(name);
@@ -112,7 +118,9 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     function showAuthorBooks(result) {
         console.log("Author's books are " + result);
+
         $("#books").show();
+
 
         // getting a list of author's books dictionaries
         var author_books = result.books_list;
@@ -122,15 +130,23 @@ $(function () { // this is the jquery shortcut for document.ready()
             var title = author_books[i].title;
             var book_id = author_books[i].id;
 
+            if (image.includes("/assets/nophoto/book/")) {
+                image = "https://placekitten.com/g/100/150";
+            } else if (image === null) {
+                image = "https://placekitten.com/g/100/150";
+            }
+
             console.log(title);
 
             $('#books').append("<span id= " + book_id + " class='books'><img src=" + image + " alt='Pretty book image' class='book-image'><h5>" + title + "</h5></span>");
         }
+        $("#authors-autocomplete").val("");
+        console.log( "authocomplete is empty - "  +  $("#authors-autocomplete").val(""));
 
         $('.books').on("click", getBook);
 
     }
-    
+
 
     $("#authors-autocomplete").on( "autocompleteselect", submitSelectedAuthor);
 
@@ -216,6 +232,12 @@ $(function () { // this is the jquery shortcut for document.ready()
             var image = year_books[i].url;
             var title = year_books[i].title;
             var book_id = year_books[i].id;
+
+            if (image.includes("/assets/nophoto/book/")) {
+                image = "https://placekitten.com/g/100/150";
+            } else if (image === null) {
+                image = "https://placekitten.com/g/100/150";
+            }
 
             console.log(title);
 
