@@ -88,14 +88,8 @@ def get_book_info():
     # get list of authors objects
     book_authors = book_info.authors
 
-    # checking if a chosen books one author or multiple
-    # base on that will add author(s) to the current book dictionary
-    if len(book_authors) > 1:
-        authors = []
-        for author in book_authors:
-            authors.append(author.name)
-    else:
-        authors = book_authors[0].name
+    # converting authors objects into dictionaries
+    authors = [author.to_dict() for author in book_authors]
 
     # adding author to the book dictionary
     book['author'] = authors
@@ -117,7 +111,7 @@ def get_author_books():
     # getting list of books objects from the database
     books = [book.to_dict() for book in author_books]
 
-    return jsonify(books_list=books)
+    return jsonify(books_list=books, name=author_name)
 
 
 @app.route("/get-award-year", methods=["GET"])

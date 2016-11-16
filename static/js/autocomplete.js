@@ -68,13 +68,14 @@ $(function () { // this is the jquery shortcut for document.ready()
     }
 
     function showBookInfo(result) {
-        console.log("Hey " + result.title);
+
         var id = result.id;
         var title = result.title;
         var image = result.url;
         var description = result.description;
         var pages = result.pages;
         var published = result.published;
+        // getting a list of authors objects
         var authors = result.author;
         
         if (image.includes("/assets/nophoto/book/")) {
@@ -83,21 +84,25 @@ $(function () { // this is the jquery shortcut for document.ready()
             image = "https://placekitten.com/g/250/400";
         }
 
+        for (var i = 0; i < authors.length; i++) {
+            
+        }
+
         console.log(title, image, authors);
     
         $('#book_image').attr('src', image);
         $('#book_title').html(title);
-        $('#authors').html("by " + authors);
+        // $('#authors').html("by " + authors);
         $('#description').html(description);
         $('#pages').html("Handcover, " + pages + " pages");
         $('#published').html("Published in " + published);
         
         $("#books-autocomplete").val("");
-
-        console.log( "authocomplete is empty - "  +  $("#books-autocomplete").val(""));
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
+
+
 
 //////////// SUBMITTING AND SHOWING BOOKS LIST BASE ON SEARCH FROM AUTHOR AUTOCOMPLETE ///////////
 
@@ -124,6 +129,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         // getting a list of author's books dictionaries
         var author_books = result.books_list;
+        var author_name = result.name;
 
         for (var i = 0; i < author_books.length; i++) {
             var image = author_books[i].url;
@@ -138,9 +144,12 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#books').append("<span id= " + book_id + " class='books'><img src=" + image + " alt='Pretty book image' class='book-image'><h5>" + title + "</h5></span>");
+            $('#books').append("<span id= " + book_id + " class='books'><h3>" + title + "</h3><img src=" + image + " alt='Pretty book image' class='book-image'></span>");
         }
+
         $("#authors-autocomplete").val("");
+        $('#books').append("<h4>By "+ author_name +"</h4>");
+        
         console.log( "authocomplete is empty - "  +  $("#authors-autocomplete").val(""));
 
         $('.books').on("click", getBook);
@@ -241,7 +250,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#books').append("<span id= " + book_id + " class='books'><img src=" + image + " alt='Pretty book image' class='book-image'><h5>" + title + "</h5></span>");
+            $('#books').append("<span id= " + book_id + " class='books'><h4>" + title + "</h4><img src=" + image + " alt='Pretty book image' class='book-image'></span>");
         }
 
         // adding an event listener to the newly created books list right away within
