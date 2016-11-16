@@ -107,33 +107,30 @@ $(function () { // this is the jquery shortcut for document.ready()
         var name = result.item.value;
         console.log(name);
 
-        $.get("/get-author-books", {"name": name}, showBooks);
+        $.get("/get-author-books", {"name": name}, showAuthorBooks);
     }
 
-    // function showBookInfo(result) {
-    //     console.log("Hey " + result.title);
-    //     var id = result.id;
-    //     var title = result.title;
-    //     var image = result.url;
-    //     var description = result.description;
-    //     var pages = result.pages;
-    //     var published = result.published;
-    //     var authors = result.author;
-        
-    
-    //     console.log(title, image, authors);
-    
-    //     $('#book_image').attr('src', image);
-    //     $('#book_title').html(title);
-    //     $('#authors').html("by " + authors);
-    //     $('#description').html(description);
-    //     $('#pages').html("Handcover, " + pages + " pages");
-    //     $('#published').html("Published in " + published);
-        
-    //     $("#books-autocomplete").val("");
+    function showAuthorBooks(result) {
+        console.log("Author's books are " + result);
+        $("#books").show();
 
-    //     console.log($("#books-autocomplete").val(""));
-    // }
+        // getting a list of author's books dictionaries
+        var author_books = result.books_list;
+
+        for (var i = 0; i < author_books.length; i++) {
+            var image = author_books[i].url;
+            var title = author_books[i].title;
+            var book_id = author_books[i].id;
+
+            console.log(title);
+
+            $('#books').append("<span id= " + book_id + " class='books'><img src=" + image + " alt='Pretty book image' class='book-image'><h5>" + title + "</h5></span>");
+        }
+
+        $('.books').on("click", getBook);
+
+    }
+    
 
     $("#authors-autocomplete").on( "autocompleteselect", submitSelectedAuthor);
 

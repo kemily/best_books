@@ -102,24 +102,22 @@ def get_book_info():
 
     return jsonify(book)
 
-# @app.route("/get-author-books", methods=["GET"])
-# def get_author_books():
-#     """Return list of the books byt the chosen author as JSON"""
+@app.route("/get-author-books", methods=["GET"])
+def get_author_books():
+    """Return list of the books byt the chosen author as JSON"""
 
-#     # gets choosen author name from the get request
-#     author_name = request.args.get("name")
+    # gets choosen author name from the get request
+    author_name = request.args.get("name")
 
-#     # getting an author object from authors table by the chosen name
-#     author = Author.query.filter(Author.name == author_name).first()
+    # getting an author object from authors table by the chosen name
+    author = Author.query.filter(Author.name == author_name).first()
+    # getting books written by the author
+    author_books = author.books
 
-#     get_id = author.author_id
+    # getting list of books objects from the database
+    books = [book.to_dict() for book in author_books]
 
-#     books = BookAuthor.query.filter(BookAuthor.author_id == get_id).all()
-
-#     # getting list of books objects from the database
-#     books = [book_object.book.to_dict() for book_object in award_books]
-
-#     return jsonify(books_list=books)
+    return jsonify(books_list=books)
 
 
 @app.route("/get-award-year", methods=["GET"])
