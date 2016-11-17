@@ -78,10 +78,10 @@ $(function () { // this is the jquery shortcut for document.ready()
         // getting a list of authors objects
         var authors = result.author;
         var genre = result.genre;
-        
-        if (image.includes("/assets/nophoto/book/")) {
+
+        if (image === null) {
             image = "https://placekitten.com/g/250/400";
-        } else if (image === null) {
+        } else if (image.includes("/assets/nophoto/book/")) {
             image = "https://placekitten.com/g/250/400";
         }
 
@@ -118,6 +118,8 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#genre').html("Genre: " + genre);
         
         $("#books-autocomplete").val("");
+
+        $('html,body').animate({scrollTop: $("#book_image").offset().top}, 1000,'swing');
 
 
         $('a.authors').on("click", getBio);
@@ -178,9 +180,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             var title = author_books[i].title;
             var book_id = author_books[i].id;
 
-            if (image.includes("/assets/nophoto/book/")) {
+            if (image === null) {
                 image = "https://placekitten.com/g/100/150";
-            } else if (image === null) {
+            } else if (image.includes("/assets/nophoto/book/")) {
                 image = "https://placekitten.com/g/100/150";
             }
 
@@ -191,6 +193,8 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $("#authors-autocomplete").val("");
         $('#books').append("<h4>By "+ author_name +"</h4>");
+
+        $('html,body').animate({scrollTop: $("#books").offset().top}, 1000,'swing');
         
         console.log( "authocomplete is empty - "  +  $("#authors-autocomplete").val(""));
 
@@ -239,6 +243,8 @@ $(function () { // this is the jquery shortcut for document.ready()
         for (var i = 0; i < years.length -1; i++) {
             $('#award-years').append("<button id="+ years[i] + " data-award=" + years[years.length-1] + " class='year-button'>" + years[i] + "</button>" + "   ");
         }
+
+        $('html,body').animate({scrollTop: $("#award-years").offset().top}, 1000,'swing');
 
         // adding an event listener to the newly created buttons right away within
         // this current function, other wise JS will ignore it outside of the function
@@ -294,6 +300,8 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             $('#books').append("<span id= " + book_id + " class='books'><h4>" + title + "</h4><img src=" + image + " alt='Pretty book image' class='book-image'></span>");
         }
+
+        $('html,body').animate({scrollTop: $("#books").offset().top}, 1000,'swing');
 
         // adding an event listener to the newly created books list right away within
         // this current function, otherwise JS will ignore it outside of the function
