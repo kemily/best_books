@@ -84,15 +84,33 @@ $(function () { // this is the jquery shortcut for document.ready()
             image = "https://placekitten.com/g/250/400";
         }
 
+        // creating an empty list to push our authors element to
+        var author_list = [];
+        // itterating over the authors list and getting the needed info
         for (var i = 0; i < authors.length; i++) {
-            
+
+            var author_name = authors[i].name;
+            var biography = authors[i].biography;
+            var author_id = authors[i].authorId;
+
+            // checking if an author has bio
+            // base on that, convirting each author name into html element and pushing them
+            // to the author_list
+            if (biography === null) {
+                author_list.push("<em id= " + author_id + " class='authors'>"+ author_name +"</em>");
+            } else {
+                author_list.push("<a id= " + author_id + " class='authors'><b>" + author_name + "</b></a>");
+            }
         }
 
-        console.log(title, image, authors);
-    
+        // joining all the authors elements from the author_list with comma,
+        // so this way authors represented in nice format with commas in the right places
+        var all_authors = author_list.join(", ");
+
+        
         $('#book_image').attr('src', image);
         $('#book_title').html(title);
-        // $('#authors').html("by " + authors);
+        $('#authors').html("by " + all_authors);
         $('#description').html(description);
         $('#pages').html("Handcover, " + pages + " pages");
         $('#published').html("Published in " + published);
