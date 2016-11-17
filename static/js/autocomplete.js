@@ -129,6 +129,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     function getBio(evt) {
         console.log("Getting bio of the author from the server");
+        $("#bio").empty();
 
         var authorId = this.id; // this is the id of the author we clicked
 
@@ -140,7 +141,9 @@ $(function () { // this is the jquery shortcut for document.ready()
     function showAuthorBio(result) {
 
         var biography = result.author_bio;
-        console.log(biography);
+        
+        $("#bio").html("<em>" + biography + "</em>");
+        $("#bio").toggle();
 
     }
 //////////// SUBMITTING AND SHOWING BOOKS LIST BASE ON SEARCH FROM AUTHOR AUTOCOMPLETE ///////////
@@ -281,9 +284,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             var title = year_books[i].title;
             var book_id = year_books[i].id;
 
-            if (image.includes("/assets/nophoto/book/")) {
+            if (image === null) {
                 image = "https://placekitten.com/g/100/150";
-            } else if (image === null) {
+            } else if (image.includes("/assets/nophoto/book/")) {
                 image = "https://placekitten.com/g/100/150";
             }
 
