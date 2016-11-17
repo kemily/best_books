@@ -83,16 +83,24 @@ def get_book_info():
 
     # # getting a book row from books table by current title
     book_info = Book.query.filter(func.lower(Book.title) == func.lower(book_title)).first()
-    book = book_info.to_dict()
 
     # get list of authors objects
     book_authors = book_info.authors
+
+    # get list of genre objects
+    book_genre = book_info.genres[0].genre
+
+    # converting book object into dictionary using to_dict method
+    book = book_info.to_dict()
 
     # converting authors objects into dictionaries
     authors = [author.to_dict() for author in book_authors]
 
     # adding author to the book dictionary
     book['author'] = authors
+
+    # adding genre to the book dictionary
+    book['genre'] = book_genre
 
     return jsonify(book)
 
@@ -157,7 +165,20 @@ def get_books():
 
     return jsonify(books_list=books)
 
+@app.route("/get-authors-bio", methods=["GET"])
+def get_authors_bio():
+    """Return biography about a chosen book author as JSON"""
 
+    # gets an author id from the get request
+    author_id = request.args.get("author_id")
+
+    # getting an author object filtered by author id
+    author_obj = Author.query.filter(Author.author_id == author_id).first()
+
+    # get list of authors objects
+    biography = author_obj.biography
+
+    return jsonify(author_bio=biography)
 
 
 if __name__ == "__main__":

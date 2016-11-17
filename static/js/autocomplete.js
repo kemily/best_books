@@ -77,6 +77,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         var published = result.published;
         // getting a list of authors objects
         var authors = result.author;
+        var genre = result.genre;
         
         if (image.includes("/assets/nophoto/book/")) {
             image = "https://placekitten.com/g/250/400";
@@ -114,14 +115,34 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#description').html(description);
         $('#pages').html("Handcover, " + pages + " pages");
         $('#published').html("Published in " + published);
+        $('#genre').html("Genre: " + genre);
         
         $("#books-autocomplete").val("");
+
+
+        $('a.authors').on("click", getBio);
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
 
+//////////// SUBMITTING AND SHOWING AUTHOR BIOGRAPHY BASE ON BOOK INFO ///////////
 
+    function getBio(evt) {
+        console.log("Getting bio of the author from the server");
 
+        var authorId = this.id; // this is the id of the author we clicked
+
+        console.log("Author id is " + authorId);
+
+        $.get("/get-authors-bio", {"author_id": authorId}, showAuthorBio);
+    }
+
+    function showAuthorBio(result) {
+
+        var biography = result.author_bio;
+        console.log(biography);
+
+    }
 //////////// SUBMITTING AND SHOWING BOOKS LIST BASE ON SEARCH FROM AUTHOR AUTOCOMPLETE ///////////
 
     function submitSelectedAuthor(evt, result) {

@@ -100,7 +100,7 @@ class BookAward(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<BookA book_id=%s award_id=%s year=%s>" % (self.book_id, self.award_id, self.year)
+        return "<Book book_id=%s award_id=%s year=%s>" % (self.book_id, self.award_id, self.year)
 
 
 class Genre(db.Model):
@@ -110,6 +110,12 @@ class Genre(db.Model):
 
     genre_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     genre = db.Column(db.String(30), nullable=True)
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<Genre genre_id=%s genre=%s>" % (self.genre_id, self.genre)
+
 
 
 class BookGenre(db.Model):
