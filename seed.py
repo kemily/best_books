@@ -17,14 +17,19 @@ def load_books():
     # open the csv file and unpack it
     with open("/home/vagrant/src/best_books/data/bestbooks.csv") as general:
         reader = csv.reader(general)
+
         #unpacking each row in the file and looping over it.
         #appending each title to the titles list
+
         for award, year, genre, title, author, author2, author3 in reader:
 
+            # if title == "English Passengers" and "Hilary Mantel" in [author, author2, author3]:
+            #     pdb.set_trace()
             # The date is in the file as year string;
             # we need to convert it to an actual datetime object.
             year = int(year)
             author = author.strip()
+            award = award.strip()
 
             #create book object
             #first, we'll check if this current book title we already have in the book table
@@ -57,8 +62,8 @@ def load_books():
 
             #create genre object
             if genre:
-                get_genre = Genre.query.filter(func.lower(Genre.genre) == func.lower(genre)).first()
-                if not get_genre:
+                new_genre = Genre.query.filter(func.lower(Genre.genre) == func.lower(genre)).first()
+                if not new_genre:
                     new_genre = Genre(genre=genre)
                     db.session.add(new_genre)
                     db.session.commit()
@@ -73,18 +78,18 @@ def load_books():
                 db.session.commit()
 
             #create first author object
-            author1 = Author.query.filter(func.lower(Author.name) == func.lower(author)).first()
-            if not author1:
-                new_author = Author(name=author)
-                db.session.add(new_author)
+            this_author = Author.query.filter(func.lower(Author.name) == func.lower(author)).first()
+            if not this_author:
+                this_author = Author(name=author)
+                db.session.add(this_author)
                 db.session.commit()
 
             #create book author object for the first author
             get_book_author = BookAuthor.query.filter(BookAuthor.book_id == book.book_id,
-                                                    BookAuthor.author_id == new_author.author_id).first()
+                                                    BookAuthor.author_id == this_author.author_id).first()
             if not get_book_author:
                 books_authors = BookAuthor(book_id=book.book_id,
-                                          author_id=new_author.author_id)
+                                          author_id=this_author.author_id)
                 db.session.add(books_authors)
                 db.session.commit()
 
@@ -94,8 +99,8 @@ def load_books():
             # if it doesn't then we'll create a new author object,
             # add it to session and commit to the database.
             if author2:
-                get_author2 = Author.query.filter(func.lower(Author.name) == func.lower(author2)).first()
-                if not get_author2:
+                new_author2 = Author.query.filter(func.lower(Author.name) == func.lower(author2)).first()
+                if not new_author2:
                     new_author2 = Author(name=author2)
                     db.session.add(new_author2)
                     db.session.commit()
@@ -112,10 +117,10 @@ def load_books():
                 # books authors table
                 else:
                     get_book_author2 = BookAuthor.query.filter(BookAuthor.book_id == book.book_id,
-                                                        BookAuthor.author_id == get_author2.author_id).first()
+                                                        BookAuthor.author_id == new_author2.author_id).first()
                     if not get_book_author2:
                         books_authors = BookAuthor(book_id=book.book_id,
-                                                  author_id=get_author2.author_id)
+                                                  author_id=new_author2.author_id)
                 db.session.add(books_authors)
                 db.session.commit()
 
@@ -124,8 +129,8 @@ def load_books():
             # if it doesn't then we'll create a new author object,
             # add it to session and commit to the database
             if author3:
-                get_author3 = Author.query.filter(func.lower(Author.name) == func.lower(author3)).first()
-                if not get_author3:
+                new_author3 = Author.query.filter(func.lower(Author.name) == func.lower(author3)).first()
+                if not new_author3:
                     new_author3 = Author(name=author3)
                     db.session.add(new_author3)
                     db.session.commit()
@@ -142,10 +147,10 @@ def load_books():
                 # books authors table
                 else:
                     get_book_author3 = BookAuthor.query.filter(BookAuthor.book_id == book.book_id,
-                                                        BookAuthor.author_id == get_author3.author_id).first()
+                                                        BookAuthor.author_id == new_author3.author_id).first()
                     if not get_book_author3:
                         books_authors = BookAuthor(book_id=book.book_id,
-                                                  author_id=get_author3.author_id)
+                                                  author_id=new_author3.author_id)
                 db.session.add(books_authors)
                 db.session.commit()
 
@@ -163,4 +168,4 @@ if __name__ == "__main__":
     Author.query.delete()
 
 
-    load_books()
+load_books()

@@ -20,20 +20,20 @@ app.secret_key = "ABC"
 # This is horrible. Fix this so that, instead, it raises an error.
 app.jinja_env.undefined = StrictUndefined
 
-# awards = [
-#     {"id": 1, "url": "/static/pictures/ManBookerPrize1.png"},
-#     {"id": 2, "url": "/static/pictures/theeconomist3.jpg"},
-#     {"id": 3, "url": "/static/pictures/ManBookerPrize2.png"},
-#     {"id": 4, "url": "/static/pictures/nationalbookaward3.jpg"},
-#     {"id": 5, "url": "/static/pictures/TheNewYorkTimes1.png"}
-# ]
+awards = [
+    {"id": 1, "url": "/static/pictures/ManBookerPrize1.png"},
+    {"id": 2, "url": "/static/pictures/theeconomist3.jpg"},
+    {"id": 3, "url": "/static/pictures/ManBookerPrize2.png"},
+    {"id": 4, "url": "/static/pictures/nationalbookaward3.jpg"},
+    {"id": 5, "url": "/static/pictures/TheNewYorkTimes1.png"}
+]
 
 @app.route('/')
 def index():
     """Homepage."""
 
     # get list of awards dictionaries from database
-    awards = [award.to_dict() for award in Award.query.all()]
+    # awards = [award.to_dict() for award in Award.query.all()]
     return render_template("homepage.html", images=awards)
 
 
