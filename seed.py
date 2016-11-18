@@ -19,7 +19,7 @@ def load_books():
         reader = csv.reader(general)
         #unpacking each row in the file and looping over it.
         #appending each title to the titles list
-        for award, year, genre, title, author, author2, author3, genre_tag, award_tag in reader:
+        for award, year, genre, title, author, author2, author3 in reader:
 
             # The date is in the file as year string;
             # we need to convert it to an actual datetime object.
