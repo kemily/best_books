@@ -167,5 +167,4 @@ if __name__ == "__main__":
     Genre.query.delete()
     Author.query.delete()
 
-
-load_books()
+    load_books()

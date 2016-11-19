@@ -62,8 +62,10 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book-info').show();
         $("#award-years").hide();
         $("#books").hide();
+
         var title = result.item.value;
         console.log(title);
+
         $.get("/get-book-info", {"title": title}, showBookInfo);
     }
 
@@ -123,9 +125,26 @@ $(function () { // this is the jquery shortcut for document.ready()
 
 
         $('a.authors').on("click", getBio);
+
+
+        // stop the click event from bubbling to the document click event that hides
+        // all the data from the page
+        $('#book-info').on('click', function(evt) {
+            evt.stopPropagation();
+        });
+
+
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
+
+    // stop the click event from bubbling to the document click event that hides
+    // all the data from the page
+    $('#books-autocomplete').on('autocompleteselect', function(evt) {
+        evt.stopPropagation();
+    });
+
+
 
 //////////// SUBMITTING AND SHOWING AUTHOR BIOGRAPHY BASE ON BOOK INFO ///////////
 
@@ -200,12 +219,21 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $('.books').on("click", getBook);
 
-    }
+        // stop the click event from bubbling to the document click event that hides
+        // all the data from the page
+        $('.books').on('click', function(evt) {
+            evt.stopPropagation();
+        });
 
+    }
 
     $("#authors-autocomplete").on( "autocompleteselect", submitSelectedAuthor);
 
-
+    // stop the click event from bubbling to the document click event that hides
+    // all the data from the page
+    $('#authors-autocomplete').on('autocompleteselect', function(evt) {
+        evt.stopPropagation();
+    });
 
 //////////// SUBMITTING AND SHOWING AWARD YEARS BASE ON CHOSEN AWARD ///////////
 
@@ -251,6 +279,12 @@ $(function () { // this is the jquery shortcut for document.ready()
         // scope, since the buttons are existing in the html, but created as a result of 
         // award choosing
         $('.year-button').on("click", getBooks);
+
+        // stop the click event from bubbling to the document click event that hides
+        // all the data from the page
+        $('.year-button').on('click', function(evt) {
+            evt.stopPropagation();
+        });
 
     }
 
@@ -309,6 +343,12 @@ $(function () { // this is the jquery shortcut for document.ready()
         // year choosing
         $('.books').on("click", getBook);
 
+        // stop the click event from bubbling to the document click event that hides
+        // all the data from the page
+        $('.books').on('click', function(evt) {
+            evt.stopPropagation();
+        });
+
     }
 
 
@@ -324,12 +364,22 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $.get("/get-book-info", {"title": book_title}, showBookInfo);
     }
-
-
     
 });
 
 
-// ///////////////////////////////// EXTRA STUFF ////////////////////////
+///////// HIDES ALL THE DATA IF THE DOCUMENT IS CLICKED OUTSIDE THE NEEDED DIVS ////////////
+
+
+function setToDefault(evt) {
+    if(!$(evt.target).is('.award-image', '#book-info')) {
+
+    $('#book-info').hide();
+    $("#award-years").hide();
+    $("#books").hide();
+  }
+}
+
+$(document).on('click', setToDefault);
 
 

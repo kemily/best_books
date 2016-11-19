@@ -116,6 +116,13 @@ class Genre(db.Model):
 
         return "<Genre genre_id=%s genre=%s>" % (self.genre_id, self.genre)
 
+    def to_dict(self):
+        """Turn an genre object into a dictionary."""
+
+        return {
+            'id': self.genre_id,
+            'genre': self.genre
+        }
 
 
 class BookGenre(db.Model):
