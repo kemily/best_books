@@ -102,6 +102,15 @@ class BookAward(db.Model):
 
         return "<Book book_id=%s award_id=%s year=%s>" % (self.book_id, self.award_id, self.year)
 
+    def to_dict(self):
+        """Turn an book_award object into a dictionary."""
+
+        return {
+            'book': self.book.title,
+            'award': self.award.name,
+            'year': self.year
+        }
+
 
 class Genre(db.Model):
     """Genre of books"""

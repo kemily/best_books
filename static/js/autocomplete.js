@@ -80,6 +80,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         // getting a list of authors objects
         var authors = result.author;
         var genre = result.genre;
+        var awards = result.awards;
 
         if (image === null) {
             image = "https://placekitten.com/g/250/400";

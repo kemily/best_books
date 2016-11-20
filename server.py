@@ -46,10 +46,9 @@ def book_auto_complete():
     # create an empty list to append titles from the tuples
     books_titles = []
 
-    # iterate over the list and, make each tuple a list, append the fist element
+    # iterate over the list and append the fist element
     # which is book title, to the books_titles
-    for item in titles:
-        title = list(item)
+    for title in titles:
         books_titles.append(title[0])
 
     # returning a books titles list
@@ -64,10 +63,9 @@ def author_auto_complete():
     # create an empty list to append authors names from the tuples
     authors_names = []
 
-    # iterate over the list and, make each tuple a list, append the fist element
+    # iterate over the list and append the fist element
     # which is author's name, to the authors_names
-    for item in authors:
-        name = list(item)
+    for name in authors:
         authors_names.append(name[0])
 
     # returning a books titles list
@@ -81,26 +79,30 @@ def get_book_info():
     # gets a book title from the get request
     book_title = request.args.get("title")
 
-    # # getting a book row from books table by current title
+    # getting a book row from books table by current title
     book_info = Book.query.filter(func.lower(Book.title) == func.lower(book_title)).first()
 
     # get list of authors objects
     book_authors = book_info.authors
-
     # get list of genre objects
     book_genre = book_info.genres[0].genre
+    # get list of book_award objects
+    book_awards = book_info.books_awards
+
+    # converting authors objects into dictionaries
+    authors = [author.to_dict() for author in book_authors]
+    # converting book awards objects into list of book award dictionaries
+    awards = [award.to_dict() for award in book_awards]
 
     # converting book object into dictionary using to_dict method
     book = book_info.to_dict()
 
-    # converting authors objects into dictionaries
-    authors = [author.to_dict() for author in book_authors]
-
     # adding author to the book dictionary
     book['author'] = authors
-
     # adding genre to the book dictionary
     book['genre'] = book_genre
+    # adding awards to the book dictionary
+    book['awards'] = awards
 
     return jsonify(book)
 
@@ -134,12 +136,13 @@ def get_award_year():
 
     years = []
 
-    # iterate over the list and, make each tuple a list, append the fist element
+    # iterate over the list and append the fist element
     # which is award, to the books_titles
-    for item in award_years:
-        year = list(item)
+    for year in award_years:
         years.append(year[0])
 
+    # taking away all the duplicates from the list of years, by converting original
+    # years list into set, and then back into the list.
     years = list(set(years))
 
     # appending awardId as a last element of the list, so we can use it in future
