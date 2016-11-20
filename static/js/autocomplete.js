@@ -71,13 +71,14 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     function showBookInfo(result) {
 
+        console.log("Received book info from the server");
+
         var id = result.id;
         var title = result.title;
         var image = result.url;
         var description = result.description;
         var pages = result.pages;
         var published = result.published;
-        // getting a list of authors objects
         var authors = result.author;
         var genre = result.genre;
         var awards = result.awards;
@@ -106,10 +107,27 @@ $(function () { // this is the jquery shortcut for document.ready()
                 author_list.push("<a id= " + author_id + " class='authors'><b>" + author_name + "</b></a>");
             }
         }
-
         // joining all the authors elements from the author_list with comma,
         // so this way authors represented in nice format with commas in the right places
         var all_authors = author_list.join(", ");
+
+        // creating an empty list to push our award element to
+        var award_list = [];
+        // itterating over the awards list and getting the needed info
+        for (var j=0; j< awards.length; j++) {
+
+            var year = awards[j].year;
+            var book_award = awards[j].award;
+            
+            // checking if an author has bio
+            // base on that, convirting each author name into html element and pushing them
+            // to the author_list
+            award_list.push("<em class='book_awards'>"+ year + ": " + book_award +"</em>");
+        }
+
+        // joining all the awards elements from the author_list with comma,
+        // so this way award represented in nice format with commas in the right places
+        var all_book_awards = award_list.join(", ");
 
         
         $('#book_image').attr('src', image);
@@ -119,6 +137,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#pages').html("Handcover, " + pages + " pages");
         $('#published').html("Published in " + published);
         $('#genre').html("Genre: " + genre);
+        $('#book_award').html("Book received an award in " + all_book_awards);
         
         $("#books-autocomplete").val("");
 
@@ -133,8 +152,6 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book-info').on('click', function(evt) {
             evt.stopPropagation();
         });
-
-
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
