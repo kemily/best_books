@@ -1,13 +1,12 @@
 """Utility file to seed bestbooks database from bestbooks file in data/"""
+
 import csv
-import datetime
 from sqlalchemy import func
 
 from model import Book, Award, BookAward, Genre, BookGenre, Author, BookAuthor, connect_to_db, db
 from server import app
 
-import os
-import sys
+
 
 def load_books():
     """Load books from bestbooks.csv into database."""

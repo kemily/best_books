@@ -1,13 +1,9 @@
 """Utility file to seed bestbooks database from award_info file in data/"""
 import csv
-import datetime
 from sqlalchemy import func
 
 from model import Award, connect_to_db, db
 from server import app
-
-import os
-import sys
 
 def load_award_info():
     """Load books from awardInfo.csv into database."""

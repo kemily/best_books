@@ -1,38 +1,30 @@
 """Utility file to seed bestbooks database from GoodReads API calls"""
 import os
 import sys
+
 import xmltodict
 import requests
 
 from sqlalchemy import func
 
-from model import Book, Award, BookAward, Genre, BookGenre, Author, BookAuthor, connect_to_db, db
+from model import Book, Author, connect_to_db, db
 from server import app
 
 goodreads_key = os.environ['GOODREADS_KEY']
+
 
 def load_api_books():
     """Update Books table via Good Reads api."""
 
     print "Book!"
 
-    # return list of title tuples from the Book table
-    titles = db.session.query(Book.title).filter(Book.published == None).all()
+    # return list of books objects from books table, if they don't have publishing year
+    books = Book.query.filter(Book.published.is_(None)).all()
 
-    # create an empty list to append titles from the tuples
-    books_titles = []
-
-    # iterate over the list and, make each tuple a list, append the fist element
-    # which is book title, to the books_titles
-    for item in titles:
-        title = list(item)
-        # print title[0]
-        books_titles.append(title[0])
-
-    # etarate over the books_titles list
-    # transform each title into more api endpoint suitable format, by replacing
-    # empty spaces with "+"
-    for title in books_titles:
+    for book in books:
+        # transform each title into api endpoint suitable format, by replacing
+        # empty spaces with "+"
+        title = book.title
         api_title = title.replace(" ", "+")
         api_title = api_title.replace("'", "%27")
 
@@ -65,10 +57,6 @@ def load_api_books():
 
             language = book_info['language_code']
 
-            # getting a book row from books table by current title
-            # and checking if this book has already api info
-            book = Book.query.filter(func.lower(Book.title) == func.lower(title)).first()
-
             #updating the book table row with api info
             book.description = info
             book.pages = pages
@@ -77,7 +65,7 @@ def load_api_books():
             book.isbn13 = isbn
             book.image_url = image_url
 
-            db.session.commit()
+    db.session.commit()
 
 
 def load_goodreads_author_id():
@@ -85,25 +73,20 @@ def load_goodreads_author_id():
 
     print "Author ID!"
 
-    # return list of names tuples from the Author table, if the authors don't have goodreads author id
-    names = db.session.query(Author.name).filter(Author.goodreads_author_id == None).all()
+    # getting list of authors objects from the authors table, if the authors don't have goodreads author id
+    authors = Author.query.filter(Author.goodreads_author_id.is_(None)).all()
 
-    # create an empty list to append names from the tuples
-    author_names = []
+    for author in authors:
 
-    # iterate over the list and, make each tuple a list, append the fist element
-    # which is author name, to the author names list
-    for name in names:
-        author_name = list(name)
-        # print title[0]
-        author_names.append(author_name[0])
-
-    for goodreads_name in author_names:
-        api_goodreads_name = goodreads_name.replace(" ", "%20")
+        #getting an author's name
+        author_name = author.name
+        # transform each name into api endpoint suitable format, by replacing
+        # empty spaces with "%20"
+        api_name = author_name.replace(" ", "%20")
 
         # using Goodreads author.search api method
         # using requests library making api calls base on author goodreads id
-        response = requests.get("https://www.goodreads.com/api/author_url/%s?key=%s" % (api_goodreads_name, goodreads_key))
+        response = requests.get("https://www.goodreads.com/api/author_url/%s?key=%s" % (api_name, goodreads_key))
 
         # using xmltodict to make xml responce into dict like object
         response = xmltodict.parse(response.content)
@@ -113,13 +96,10 @@ def load_goodreads_author_id():
             # getting a goodreads autor id
             api_author_id = response['GoodreadsResponse']['author'].get('@id')
 
-            # getting an author from the authors table with the current name
-            get_author = Author.query.filter(func.lower(Author.name) == func.lower(goodreads_name)).first()
-            if get_author:
-                get_author.goodreads_author_id = api_author_id
+            #updating the author table row with api info
+            author.goodreads_author_id = api_author_id
 
-            db.session.commit()
-
+    db.session.commit()
 
 
 def load_author_bio():
@@ -127,39 +107,30 @@ def load_author_bio():
 
     print "Author Bio!"
 
-    # return list of ids tuples from the Author table
-    ids = db.session.query(Author.goodreads_author_id).filter(Author.biography == None).all()
+    # return list of authors objects from the authors table, which have good reads api id and
+    # don't have biography
+    authors = Author.query.filter(Author.goodreads_author_id.isnot(None), Author.biography.is_(None)).all()
 
-    # create an empty list to append ids from the tuples
-    author_ids = []
+    for author in authors:
+        goodreads_id = author.goodreads_author_id
 
-    # iterate over the list and, make each tuple a list, append the fist element
-    # which is goodreads author id, to the author_ids
-    for item in ids:
-        goodreads_ids = list(item)
-        if goodreads_ids[0] is not None:
-            author_ids.append(goodreads_ids[0])
+        # using Goodreads author.show api method
+        # using requests library making api calls base on author goodreads id
+        response = requests.get("https://www.goodreads.com/author/show/%s?format=xml&key=%s" % (goodreads_id, goodreads_key))
+        # using xmltodict to make xml responce into dict like object
+        response = xmltodict.parse(response.content)
+        # checking if goodreads response has any value
+        if response.get('GoodreadsResponse'):
+            author_info = response['GoodreadsResponse']['author']
+            about = author_info['about']
 
-    # etarate over the author_ids list
-    for goodreads_id in author_ids:
+            # update an author biography base on api response
+            if about:
+                author.biography = about
 
-        # getting an author  from the authors table with the current goodreads id
-        author = Author.query.filter(Author.goodreads_author_id == goodreads_id).first()
-        if author:
-            # using Goodreads author.show api method
-            # using requests library making api calls base on author goodreads id
-            response = requests.get("https://www.goodreads.com/author/show/%s?format=xml&key=%s" % (goodreads_id, goodreads_key))
-            # using xmltodict to make xml responce into dict like object
-            response = xmltodict.parse(response.content)
-            # checking if goodreads response has any value
-            if response.get('GoodreadsResponse'):
-                author_info = response['GoodreadsResponse']['author']
-                about = author_info['about']
+    db.session.commit()
 
-                if about:
-                    author.biography = about
 
-            db.session.commit()
 
 
 ####################################

@@ -1,5 +1,5 @@
 """Models and database functions for Best Book project."""
-import time
+
 from flask_sqlalchemy import SQLAlchemy
 
 # This is the connection to the PostgreSQL database; we're getting this through
@@ -35,8 +35,8 @@ class Book(db.Model):
 
     # Define relationship to author table, through books_authors
     authors = db.relationship("Author",
-                             secondary="books_authors",
-                             backref="books")
+                              secondary="books_authors",
+                              backref="books")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -178,8 +178,8 @@ class BookAuthor(db.Model):
                         db.ForeignKey('books.book_id'),
                         nullable=False)
     author_id = db.Column(db.Integer,
-                         db.ForeignKey('authors.author_id'),
-                         nullable=False)
+                          db.ForeignKey('authors.author_id'),
+                          nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -225,8 +225,7 @@ def example_data():
     BookAuthor.query.delete()
 
 
-    new_book = Book(
-                    title="War and Peace",
+    new_book = Book(title="War and Peace",
                     description="A great art by Leo Tolstoy",
                     pages=230,
                     published=2005,
@@ -235,37 +234,30 @@ def example_data():
                     isbn13="869403-13",
                     image_url="some url")
 
-    new_author = Author(
-                        goodreads_author_id=456,
+    new_author = Author(goodreads_author_id=456,
                         name="Leo Tolstoy",
                         biography="Leo Tolstoy is a famous Russian author")
 
-    new_award = Award(
-                      name="The New York Times",
+    new_award = Award(name="The New York Times",
                       description="The NYT newspaper is a big publication that every year sets the best 10 books of the year",
                       image_url="award_url")
 
-    new_genre = Genre(
-                      genre="Fiction")
+    new_genre = Genre(genre="Fiction")
 
     db.session.add_all([new_book, new_award, new_genre, new_author])
     db.session.commit()
 
 
-    new_bookaward = BookAward(
-                              book_id=1,
+    new_bookaward = BookAward(book_id=1,
                               award_id=1,
                               year=2010)
 
-    new_genre = Genre(
-                      genre="Fiction")
+    new_genre = Genre(genre="Fiction")
 
-    new_bookgenre = BookGenre(
-                              book_id=1,
+    new_bookgenre = BookGenre(book_id=1,
                               genre_id=1)
 
-    new_bookauthor = BookAuthor(
-                                book_id=1,
+    new_bookauthor = BookAuthor(book_id=1,
                                 author_id=1)
 
     db.session.add_all([new_bookaward, new_genre, new_bookgenre, new_bookauthor])
