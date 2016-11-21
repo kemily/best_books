@@ -68,8 +68,25 @@ def author_auto_complete():
     for name in authors:
         authors_names.append(name[0])
 
-    # returning a books titles list
+    # returning a authors names list
     return jsonify(names_list=authors_names)
+
+@app.route("/genre-auto-complete", methods=["GET"])
+def genre_auto_complete():
+    """Return a list of all genres list that are currently in the database"""
+
+    # gets all the genres tuples from the genres table
+    get_genres = db.session.query(Genre.genre).all()
+    # create an empty list to append genres from the tuples
+    genres = []
+
+    # iterate over the list and append the fist element
+    # which is genre, to the genres
+    for genre in get_genres:
+        genres.append(genre[0])
+
+    # returning genres list
+    return jsonify(genres_list=genres)
 
 
 @app.route("/get-book-info", methods=["GET"])
@@ -122,6 +139,23 @@ def get_author_books():
     books = [book.to_dict() for book in author_books]
 
     return jsonify(books_list=books, name=author_name)
+
+@app.route("/get-genre-books", methods=["GET"])
+def get_genre_books():
+    """Return list of the books by the chosen genre as JSON"""
+
+    # gets selected genre from the get request
+    genre = request.args.get("genre")
+
+    # getting genre object from genres table by the selected genre
+    get_genre = Genre.query.filter(Genre.genre == genre).first()
+    # getting books in the selected genre
+    genre_books = get_genre.books
+
+    # getting list of books objects from the database
+    books = [book.to_dict() for book in genre_books]
+
+    return jsonify(books_list=books, genre=genre)
 
 
 @app.route("/get-award-year", methods=["GET"])

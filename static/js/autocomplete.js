@@ -4,7 +4,8 @@
 
 $(function () { // this is the jquery shortcut for document.ready()
 
-    // when the page is loaded the 
+    // when the page is loaded the list of books titles is loaded from the database
+    // and will appear in the auto complete drop down manu
     function bookAutoComplete(evt) {
         console.log("doing book autocomplete magic!");
 
@@ -31,7 +32,8 @@ $(function () { // this is the jquery shortcut for document.ready()
 ///////////////////// LOADING AUTHOR AUTOCOMPLETE ////////////////////////
 
 
-// when the page is loaded the 
+    // when the page is loaded the list of books authors is loaded from the database
+    // and will appear in the auto complete drop down manu
     function authorAutoComplete(evt) {
         console.log("doing author autocomplete magic!");
 
@@ -52,6 +54,32 @@ $(function () { // this is the jquery shortcut for document.ready()
     }
 
     var authorCall = authorAutoComplete();
+
+///////////////////// LOADING GENRES AUTOCOMPLETE ////////////////////////
+
+    // when the page is loaded the list of genres is loaded from the database
+    // and will appear in the auto complete drop down manu
+    function genresAutoComplete(evt) {
+        console.log("doing genres autocomplete magic!");
+
+        $.get("/genre-auto-complete", showGenreAutoComplete);
+    }
+
+    function showGenreAutoComplete(result) {
+
+        console.log("Genres are getting back from the server!");
+
+        var genres = result.genres_list;
+
+        $('#genres-autocomplete').autocomplete({
+            source: genres,
+            minLength: 1
+        }); // give our user auto complete
+
+    }
+
+    var genresCall = genresAutoComplete();
+
 
 
 //////////// SUBMITTING AND SHOWING BOOK INFO BASE ON SEARCH FROM AUTOCOMPLETE ///////////
@@ -122,7 +150,7 @@ $(function () { // this is the jquery shortcut for document.ready()
             // checking if an author has bio
             // base on that, convirting each author name into html element and pushing them
             // to the author_list
-            award_list.push("<em class='book_awards'>"+ year + ": " + book_award +"</em>");
+            award_list.push("<em class='book_awards'>"+ year + " by " + book_award +"</em>");
         }
 
         // joining all the awards elements from the author_list with comma,
@@ -250,6 +278,74 @@ $(function () { // this is the jquery shortcut for document.ready()
     // stop the click event from bubbling to the document click event that hides
     // all the data from the page
     $('#authors-autocomplete').on('autocompleteselect', function(evt) {
+        evt.stopPropagation();
+    });
+
+//////////// SUBMITTING AND SHOWING BOOKS LIST BASE ON SEARCH FROM GENRES AUTOCOMPLETE ///////////
+
+    function submitSelectedGenre(evt, result) {
+        
+        console.log("submitting selected genre to the server!");
+        
+        $('#book-info').hide();
+        $("#award-years").hide();
+        $("#books").hide();
+        $("#books").empty();
+
+        var genre = result.item.value;
+        console.log(genre);
+
+        $.get("/get-genre-books", {"genre": genre}, showGenreBooks);
+    }
+
+    function showGenreBooks(result) {
+        console.log("Genre books are " + result);
+
+        $("#books").show();
+
+
+        // getting a list of genre books dictionaries and genre 
+        var genre_books = result.books_list;
+        var genre_name = result.genre;
+
+        for (var i = 0; i < genre_books.length; i++) {
+            var image = genre_books[i].url;
+            var title = genre_books[i].title;
+            var book_id = genre_books[i].id;
+
+            if (image === null) {
+                image = "https://placekitten.com/g/100/150";
+            } else if (image.includes("/assets/nophoto/book/")) {
+                image = "https://placekitten.com/g/100/150";
+            }
+
+            console.log(title);
+
+            $('#books').append("<span id= " + book_id + " class='books'><h3>" + title + "</h3><img src=" + image + " alt='Pretty book image' class='book-image'></span>");
+        }
+
+        $("#genres-autocomplete").val("");
+        $('#books').append("<h4>"+ genre_name +" books:</h4>");
+
+        $('html,body').animate({scrollTop: $("#books").offset().top}, 1000,'swing');
+        
+        console.log( "authocomplete is empty - "  +  $("#genres-autocomplete").val(""));
+
+        $('.books').on("click", getBook);
+
+        // stop the click event from bubbling to the document click event that hides
+        // all the data from the page
+        $('.books').on('click', function(evt) {
+            evt.stopPropagation();
+        });
+
+    }
+
+    $("#genres-autocomplete").on( "autocompleteselect", submitSelectedGenre);
+
+    // stop the click event from bubbling to the document click event that hides
+    // all the data from the page
+    $('#genres-autocomplete').on('autocompleteselect', function(evt) {
         evt.stopPropagation();
     });
 
