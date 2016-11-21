@@ -3,6 +3,7 @@
 	<div id="homepage-block">
 
         <div id="search-boxes">
+            <h1>Welcome to Best Books</h1>
             <label for="books-autocomplete">Search by: </label>
             <input type="text" name="titles" id="books-autocomplete" class="autocomplete" placeholder="Book title" /> 
             <input type="text" name="names" id="authors-autocomplete" class="autocomplete" placeholder="Author name"/>
@@ -22,8 +23,7 @@
         </div>
 
         <div id="award-years"></div>
-        <div id="books">
-        </div>
+        <div id="books"></div>
         <div id="book-info">
                 <h3 id="book_title">
                 </h3>
@@ -37,8 +37,9 @@
                 <p id="published"></p>
                 <p id="genre"></p>
                 <p id="book_award"></p>
+                <button id='reviews' class='reviews-btn'>Read Good Reads Reviews</button>
+                <div id='goodreads-reviews'></div>
         </div>
-
 	</div>
 
 {% endblock %}

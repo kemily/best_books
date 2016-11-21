@@ -15,6 +15,10 @@
             display: none;
         }
 
+        /*#reviews {
+            display: none;
+        }*/
+
         #bio {
             width: 800px;
             display: none;
@@ -25,27 +29,26 @@
             display: inline-block;
             width: 200px;
             height: 200px;
-            margin: 50px;
+            margin: 40px;
         }
-
 
 
     </style>
 </head>
 <body>
 
-<h1>Welcome to Best Books</h1>
-
 {% block content %}
     Put your body here
 {% endblock %}
 
-<footer>
-    <h2>Footer</h1>
+<footer class="container">
+    <h2>Footer</h2>
+    <br><br>
 </footer>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/static/js/autocomplete.js"></script>
 </body>
 </html>

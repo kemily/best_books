@@ -50,7 +50,6 @@ $(function () { // this is the jquery shortcut for document.ready()
             source: names,
             minLength: 1
         }); // give our user auto complete
-
     }
 
     var authorCall = authorAutoComplete();
@@ -171,10 +170,9 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $('html,body').animate({scrollTop: $("#book_image").offset().top}, 1000,'swing');
 
-
         $('a.authors').on("click", getBio);
-
-
+        $('#reviews').on("click", getReviews);
+        
         // stop the click event from bubbling to the document click event that hides
         // all the data from the page
         $('#book-info').on('click', function(evt) {
@@ -189,7 +187,6 @@ $(function () { // this is the jquery shortcut for document.ready()
     $('#books-autocomplete').on('autocompleteselect', function(evt) {
         evt.stopPropagation();
     });
-
 
 
 //////////// SUBMITTING AND SHOWING AUTHOR BIOGRAPHY BASE ON BOOK INFO ///////////
@@ -213,6 +210,33 @@ $(function () { // this is the jquery shortcut for document.ready()
         $("#bio").toggle();
 
     }
+
+//////////// SUBMITTING AND SHOWING REVIEWS BASE ON SELECTED BOOK ///////////
+
+    function getReviews(evt) {
+
+        evt.stopPropagation();
+        $("#reviews").show();
+
+        console.log("Getting goodreads reviews of the book from the server");
+        $("#goodreads-reviews").empty();
+
+        var title = $(this).parent().children('#book_title').html();
+
+        console.log("Get review of the book "+ title);
+
+    //  $.get("/get-authors-bio", {"author_id": authorId}, showAuthorBio);
+    }
+
+    // function showAuthorBio(result) {
+
+    //     var biography = result.author_bio;
+        
+    //     $("#bio").html("<em>" + biography + "</em>");
+    //     $("#bio").toggle();
+
+    // }
+
 //////////// SUBMITTING AND SHOWING BOOKS LIST BASE ON SEARCH FROM AUTHOR AUTOCOMPLETE ///////////
 
     function submitSelectedAuthor(evt, result) {
@@ -234,7 +258,6 @@ $(function () { // this is the jquery shortcut for document.ready()
         console.log("Author's books are " + result);
 
         $("#books").show();
-
 
         // getting a list of author's books dictionaries
         var author_books = result.books_list;
@@ -303,10 +326,11 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $("#books").show();
 
-
         // getting a list of genre books dictionaries and genre 
         var genre_books = result.books_list;
         var genre_name = result.genre;
+
+        $('#books').append("<h4>"+ genre_name +" books:</h4>");
 
         for (var i = 0; i < genre_books.length; i++) {
             var image = genre_books[i].url;
@@ -325,11 +349,8 @@ $(function () { // this is the jquery shortcut for document.ready()
         }
 
         $("#genres-autocomplete").val("");
-        $('#books').append("<h4>"+ genre_name +" books:</h4>");
 
         $('html,body').animate({scrollTop: $("#books").offset().top}, 1000,'swing');
-        
-        console.log( "authocomplete is empty - "  +  $("#genres-autocomplete").val(""));
 
         $('.books').on("click", getBook);
 
@@ -386,7 +407,7 @@ $(function () { // this is the jquery shortcut for document.ready()
             $('#award-years').append("<button id="+ years[i] + " data-award=" + years[years.length-1] + " class='year-button'>" + years[i] + "</button>" + "   ");
         }
 
-        $('html,body').animate({scrollTop: $("#award-years").offset().top}, 1000,'swing');
+        // $('html,body').animate({scrollTop: $("#award-years").offset().top}, 1000,'swing');
 
         // adding an event listener to the newly created buttons right away within
         // this current function, other wise JS will ignore it outside of the function
@@ -409,6 +430,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
 
     function getBooks(evt) {
+
         console.log("Getting books from the server");
 
         $("#books").empty();
@@ -478,22 +500,20 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $.get("/get-book-info", {"title": book_title}, showBookInfo);
     }
-    
-});
 
 
 ///////// HIDES ALL THE DATA IF THE DOCUMENT IS CLICKED OUTSIDE THE NEEDED DIVS ////////////
 
 
-function setToDefault(evt) {
-    if(!$(evt.target).is('.award-image', '#book-info')) {
+    function setToDefault(evt) {
+        if(!$(evt.target).is('.award-image', '#book-info')) {
 
-    $('#book-info').hide();
-    $("#award-years").hide();
-    $("#books").hide();
-  }
-}
+        $('#book-info').hide();
+        $("#award-years").hide();
+        $("#books").hide();
+      }
+    }
 
-$(document).on('click', setToDefault);
+    $(document).on('click', setToDefault);
 
-
+});
