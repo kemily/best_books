@@ -175,6 +175,12 @@ def get_award_year():
     # gets all the award's years tuples from the BooksAward table
     award_years = db.session.query(BookAward.year).filter(BookAward.award_id == awardYear).all()
 
+    # getting award row from award table by the chosen award
+    get_award = Award.query.filter(Award.award_id == awardYear).first()
+
+    # get award information in a dictionary format
+    award = get_award.to_dict()
+
     years = []
 
     # iterate over the list and append the fist element
@@ -190,7 +196,7 @@ def get_award_year():
     years.append(awardYear)
 
     # returning an award years list
-    return jsonify(years_list=years)
+    return jsonify(years_list=years, award=award)
 
 
 @app.route("/get-books", methods=["GET"])

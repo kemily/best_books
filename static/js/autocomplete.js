@@ -169,6 +169,8 @@ $(function () { // this is the jquery shortcut for document.ready()
         
         $("#books-autocomplete").val("");
         $("#goodreads-reviews").empty();
+        $("#bio").empty();
+        $("#bio").hide();
 
         $('html,body').animate({scrollTop: $("#book_image").offset().top}, 1000,'swing');
 
@@ -379,14 +381,14 @@ $(function () { // this is the jquery shortcut for document.ready()
         evt.preventDefault();
         console.log("Getting years from the server");
 
-        var id = this.id; // this is the id on the image we clicked
+        var id = this.id; // this is the id on the award we clicked
         console.log("the id is " + id);
 
         // if any of the info from the book search is 
         // still on the page, it should disappear when an eward is choosen 
         $("#book-info").hide();
-
         $("#books").hide();
+        $("#award-info").hide();
 
         // since we are usuing append for the years buttons, every time when 
         // award is clicked we are cleaning the previous years from the div 
@@ -398,14 +400,19 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     function showAwardYears(result) {
         $("#award-years").show();
-
+        $("#award-info").show();
+    
         var years = result.years_list;
+        var award = result.award.description;
+        var awardName = result.award.name;
 
         for (var i = 0; i < years.length -1; i++) {
             $('#award-years').append("<button id="+ years[i] + " data-award=" + years[years.length-1] + " class='year-button'>" + years[i] + "</button>" + "   ");
         }
 
-        $('html,body').animate({scrollTop: $("#award-years").offset().top}, 1000,'swing');
+        $("#award-info").html(award + "<br> Choose any year under to check the books were awarded by " + awardName);
+        
+        $('html,body').animate({scrollTop: $("#award-info").offset().top}, 1000,'swing');
 
         // adding an event listener to the newly created buttons right away within
         // this current function, other wise JS will ignore it outside of the function
