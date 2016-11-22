@@ -1,45 +1,46 @@
 {% extends 'base.html' %}
 {% block content %}
-	<div id="homepage-block">
+     <div id="search-boxes">
+        <label for="books-autocomplete">Search by: </label>
+        <input type="text" name="titles" id="books-autocomplete" class="autocomplete" placeholder="Book title" /> 
+        <input type="text" name="names" id="authors-autocomplete" class="autocomplete" placeholder="Author name"/>
 
-        <div id="search-boxes">
-            <h1>Welcome to Best Books</h1>
-            <label for="books-autocomplete">Search by: </label>
-            <input type="text" name="titles" id="books-autocomplete" class="autocomplete" placeholder="Book title" /> 
-            <input type="text" name="names" id="authors-autocomplete" class="autocomplete" placeholder="Author name"/>
+        <input type="text" name="genres" id="genres-autocomplete" class="autocomplete" placeholder="Genres"/>
+    </div>
 
-            <input type="text" name="genres" id="genres-autocomplete" class="autocomplete" placeholder="Genres"/>
-        </div>
+    <div id="awards" class="container">
+        <!-- <h1>Welcome to Best Books</h1> -->
+        <h2>Awards!!!</h2>
+        {% for image in images %}
+            <div class="floating-images">
+                <a id="{{ image.id }}" class="award-image">
+                    <img src="{{ image.url }}" alt="image representing an award">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 
-        <div id="awards">
-            <h2>Awards!!!</h2>
-            {% for image in images %}
-                <div class="floating-images">
-                    <a id="{{ image.id }}" class="award-image">
-                        <img src="{{ image.url }}" alt="image representing an award">
-                    </a>
-                </div>
-            {% endfor %}
-        </div>
+    <div id="award-years" class="container"></div>
+    <div id="books" class="container-fluid">
+        <p id="by-info"></p>
+        <div id="all-books" class="row"></div>
+    </div>
+    <div id="book-info" class="container">
+            <h3 id="book_title">
+            </h3>
+            <p>
+                <img id="book_image" src=" " alt="a pretty image of your selected book">
+            </p>
+            <p id="authors"></p>
+            <p id="bio"></p>
+            <p id="description"></p>
+            <p id="pages"></p>
+            <p id="published"></p>
+            <p id="genre"></p>
+            <p id="book_award"></p>
+            <button id='reviews' class='reviews-btn'>Read Good Reads Reviews</button>
+            <div id='goodreads-reviews'></div>
+    </div>
 
-        <div id="award-years"></div>
-        <div id="books"></div>
-        <div id="book-info">
-                <h3 id="book_title">
-                </h3>
-                <p>
-                    <img id="book_image" src=" " alt="a pretty image of your selected book">
-                </p>
-                <p id="authors"></p>
-                <p id="bio"></p>
-                <p id="description"></p>
-                <p id="pages"></p>
-                <p id="published"></p>
-                <p id="genre"></p>
-                <p id="book_award"></p>
-                <button id='reviews' class='reviews-btn'>Read Good Reads Reviews</button>
-                <div id='goodreads-reviews'></div>
-        </div>
-	</div>
 
 {% endblock %}

@@ -100,6 +100,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         console.log("Received book info from the server");
 
+
         var id = result.id;
         var title = result.title;
         var image = result.url;
@@ -167,6 +168,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book_award').html("Book received an award in " + all_book_awards);
         
         $("#books-autocomplete").val("");
+        $("#goodreads-reviews").empty();
 
         $('html,body').animate({scrollTop: $("#book_image").offset().top}, 1000,'swing');
 
@@ -216,6 +218,7 @@ $(function () { // this is the jquery shortcut for document.ready()
     function getReviews(evt) {
 
         evt.stopPropagation();
+        
         $("#reviews").show();
 
         console.log("Getting goodreads reviews of the book from the server");
@@ -225,17 +228,16 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         console.log("Get review of the book "+ title);
 
-    //  $.get("/get-authors-bio", {"author_id": authorId}, showAuthorBio);
+        $.get("/get-goodreads-reviews", {"title": title}, showGoodreadsReview);
     }
 
-    // function showAuthorBio(result) {
+    function showGoodreadsReview(result) {
 
-    //     var biography = result.author_bio;
+        var widget = result.goodreads_widget;
         
-    //     $("#bio").html("<em>" + biography + "</em>");
-    //     $("#bio").toggle();
+        $("#goodreads-reviews").html(widget);
 
-    // }
+    }
 
 //////////// SUBMITTING AND SHOWING BOOKS LIST BASE ON SEARCH FROM AUTHOR AUTOCOMPLETE ///////////
 
@@ -246,7 +248,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book-info').hide();
         $("#award-years").hide();
         $("#books").hide();
-        $("#books").empty();
+        $("#all-books").empty();
 
         var name = result.item.value;
         console.log(name);
@@ -276,11 +278,11 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#books').append("<span id= " + book_id + " class='books'><h3>" + title + "</h3><img src=" + image + " alt='Pretty book image' class='book-image'></span>");
+            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><h5>" + title + "</h5><img src=" + image + " alt='Pretty book image' class='book-image'></div>");
         }
 
         $("#authors-autocomplete").val("");
-        $('#books').append("<h4>By "+ author_name +"</h4>");
+        $('#by-info').html("<h4>Books that were written by "+ author_name +"</h4>");
 
         $('html,body').animate({scrollTop: $("#books").offset().top}, 1000,'swing');
         
@@ -313,7 +315,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book-info').hide();
         $("#award-years").hide();
         $("#books").hide();
-        $("#books").empty();
+        $("#all-books").empty();
 
         var genre = result.item.value;
         console.log(genre);
@@ -330,7 +332,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         var genre_books = result.books_list;
         var genre_name = result.genre;
 
-        $('#books').append("<h4>"+ genre_name +" books:</h4>");
+        $('#by-info').html("<h4>"+ genre_name +" books:</h4>");
 
         for (var i = 0; i < genre_books.length; i++) {
             var image = genre_books[i].url;
@@ -345,7 +347,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#books').append("<span id= " + book_id + " class='books'><h3>" + title + "</h3><img src=" + image + " alt='Pretty book image' class='book-image'></span>");
+            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><h5>" + title + "</h5><img src=" + image + " alt='Pretty book image' class='book-image'></div>");
         }
 
         $("#genres-autocomplete").val("");
@@ -377,23 +379,19 @@ $(function () { // this is the jquery shortcut for document.ready()
         evt.preventDefault();
         console.log("Getting years from the server");
 
-
         var id = this.id; // this is the id on the image we clicked
         console.log("the id is " + id);
 
-        // if any of the info from the book search of books search by author is 
+        // if any of the info from the book search is 
         // still on the page, it should disappear when an eward is choosen 
         $("#book-info").hide();
-        // $("#book-info").css('display', '');
 
         $("#books").hide();
-        // $("#books").css('display', 'none');
 
         // since we are usuing append for the years buttons, every time when 
         // award is clicked we are cleaning the previous years from the div 
         // and appending the new ones
         $("#award-years").empty();
-        // $("#award-years").css('display', 'none');
 
         $.get("/get-award-year", {'id': id}, showAwardYears);
     }
@@ -433,8 +431,9 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         console.log("Getting books from the server");
 
-        $("#books").empty();
-
+        $("#book-info").hide();
+        $("#books").hide();
+        
         var award_year = this.id; // this is the id on the year we clicked
         var award_id = $(this).attr("data-award");
 
@@ -451,8 +450,9 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     function showYearBooks(result) {
 
+        $("#all-books").empty();
         $("#books").show();
-
+        
         var year_books = result.books_list;
 
         for (var i = 0; i < year_books.length; i++) {
@@ -468,7 +468,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#books').append("<span id= " + book_id + " class='books'><h4>" + title + "</h4><img src=" + image + " alt='Pretty book image' class='book-image'></span>");
+            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><h5>" + title + "</h5><img src=" + image + " alt='Pretty book image' class='book-image'></div>");
         }
 
         $('html,body').animate({scrollTop: $("#books").offset().top}, 1000,'swing');

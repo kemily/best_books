@@ -1,14 +1,19 @@
 """Best book awards."""
 
+import os
+
+import xmltodict
+import requests
+
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, request, flash, redirect, session
+from flask import Flask, render_template, request
 from flask_debugtoolbar import DebugToolbarExtension
 from flask import jsonify
 
 from sqlalchemy import func
 
-from model import connect_to_db, db, Book, Award, BookAward, Genre, BookGenre, Author, BookAuthor
+from model import connect_to_db, db, Book, Award, BookAward, Genre, Author
 
 
 app = Flask(__name__)
@@ -19,6 +24,8 @@ app.secret_key = "ABC"
 # Normally, if you use an undefined variable in Jinja2, it fails silently.
 # This is horrible. Fix this so that, instead, it raises an error.
 app.jinja_env.undefined = StrictUndefined
+
+goodreads_key = os.environ['GOODREADS_KEY']
 
 # awards = [
 #     {"id": 1, "url": "/static/pictures/ManBookerPrize1.png"},
@@ -216,6 +223,31 @@ def get_authors_bio():
     biography = author_obj.biography
 
     return jsonify(author_bio=biography)
+
+@app.route("/get-goodreads-reviews", methods=["GET"])
+def get_goodreads_reviews():
+    """Call Goodreads API to get a reviews widget of the selected book and return it as JSON"""
+
+    # gets book title from the get request
+    book_title = request.args.get("title")
+
+    # transform each title into api endpoint suitable format, by replacing
+    # empty spaces with "+"
+    api_title = book_title.replace(" ", "+")
+    api_title = api_title.replace("'", "%27")
+
+    # using Goodreads book.title api method
+    # using requests library making api calls base on book api title we formated
+    response = requests.get("https://www.goodreads.com/book/title.xml?key=%s&title=%s" % (goodreads_key, api_title))
+    # using xmltodict to make xml responce into dict like object
+    response = xmltodict.parse(response.content)
+
+    # checking if goodreads response has any value
+    if response.get('GoodreadsResponse'):
+        book_info = response['GoodreadsResponse']['book']
+        widget = book_info['reviews_widget']
+
+    return jsonify(goodreads_widget=widget)
 
 
 if __name__ == "__main__":

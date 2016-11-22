@@ -65,7 +65,7 @@ def load_api_books():
             book.isbn13 = isbn
             book.image_url = image_url
 
-    db.session.commit()
+        db.session.commit()
 
 
 def load_goodreads_author_id():
@@ -99,7 +99,7 @@ def load_goodreads_author_id():
             #updating the author table row with api info
             author.goodreads_author_id = api_author_id
 
-    db.session.commit()
+        db.session.commit()
 
 
 def load_author_bio():
@@ -128,7 +128,7 @@ def load_author_bio():
             if about:
                 author.biography = about
 
-    db.session.commit()
+        db.session.commit()
 
 
 
@@ -143,4 +143,4 @@ if __name__ == "__main__":
 
     # load_api_books()
     # load_goodreads_author_id()
-    # load_author_bio()
+    load_author_bio()
