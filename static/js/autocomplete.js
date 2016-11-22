@@ -485,8 +485,21 @@ $(function () { // this is the jquery shortcut for document.ready()
         $(this).val('');
     });
 
+
+    // ===== Scroll to Top ==== 
+    $(window).scroll(function() {
+        if ($(this).scrollTop() >= 50) {       // If page is scrolled more than 50px
+            $('#return-to-top').fadeIn(200);    // Fade in the arrow
+        } else {
+            $('#return-to-top').fadeOut(200);   // Else fade out the arrow
+        }
+    });
+
     // goes to the top if clicked on the "Top" link in the nav bar
-    $('#top-scroll').on('click', function(){
+    // or clicked on the arrow
+    $('#top-scroll, #return-to-top').on('click', function(){
         $('html,body').animate({scrollTop: 0}, 1000,'swing');
     });
+
+
 });
