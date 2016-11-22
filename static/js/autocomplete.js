@@ -449,6 +449,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $("#all-books").empty();
         $("#books").show();
+        $("#book-info").hide();
         
         var year_books = result.books_list;
 
