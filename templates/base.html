@@ -6,11 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Best Books</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <style>
 
         body { padding-top: 70px; 
+        }
+
+        #books-autocomplete {
+            width: 30%;
+        }
+
+        #authors-autocomplete {
+            width:20%;
+        }
+
+        #genres-autocomplete {
+            width:20%;
         }
 
         #awards img {
@@ -20,6 +32,7 @@
 
         #book-info {
             display: none;
+            position: relative;
         }
 
         #bio {
@@ -28,7 +41,12 @@
             border: 1px solid gray;
         }
 
-        .floating-images {
+        #search-boxes {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .floating-awards {
             display: inline-block;
             width: 200px;
             height: 200px;
@@ -37,7 +55,7 @@
 
         .books {
             display: inline-block;
-            width: 200px;
+            width: 150px;
             height: 250px;
             margin: 20px;
         }

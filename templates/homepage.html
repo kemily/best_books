@@ -1,18 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
-     <div id="search-boxes">
-        <label for="books-autocomplete">Search by: </label>
-        <input type="text" name="titles" id="books-autocomplete" class="autocomplete" placeholder="Book title" /> 
-        <input type="text" name="names" id="authors-autocomplete" class="autocomplete" placeholder="Author name"/>
 
-        <input type="text" name="genres" id="genres-autocomplete" class="autocomplete" placeholder="Genres"/>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Best Books</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Top</a></li>
+            <!-- Trigger the modal with a link -->
+            <li><a id="about" data-toggle="modal" data-target="#myModal">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Welcome to Best Books!</h4>
+            </div>
+            <div class="modal-body">
+              <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
     </div>
 
     <div id="awards" class="container">
-        <!-- <h1>Welcome to Best Books</h1> -->
-        <h2>Awards!!!</h2>
+        <h2>Best Books!</h2>
         {% for image in images %}
-            <div class="floating-images">
+            <div class="floating-awards">
                 <a id="{{ image.id }}" class="award-image">
                     <img src="{{ image.url }}" alt="image representing an award">
                 </a>
@@ -20,8 +53,19 @@
         {% endfor %}
     </div>
 
+    <div id="search-boxes" class="container">
+        <form>
+            <div class="form-inline">
+                <label for="books-autocomplete">Search by: </label>
+                <input type="text" name="titles" id="books-autocomplete" class="autocomplete form-control" placeholder="Book title"/>
+                <input type="text" name="names" id="authors-autocomplete" class="form-control autocomplete" placeholder="Author name"/>
+                <input type="text" name="genres" id="genres-autocomplete" class="form-control autocomplete" placeholder="Genres"/>
+            </div>
+        </form>
+    </div>
+
     <div id="award-years" class="container"></div>
-    <div id="books" class="container-fluid">
+    <div id="books" class="container">
         <p id="by-info"></p>
         <div id="all-books" class="row"></div>
     </div>

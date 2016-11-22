@@ -132,7 +132,7 @@ $(function () { // this is the jquery shortcut for document.ready()
             if (biography === null) {
                 author_list.push("<em id= " + author_id + " class='authors'>"+ author_name +"</em>");
             } else {
-                author_list.push("<a id= " + author_id + " class='authors'><b>" + author_name + "</b></a>");
+                author_list.push("<a id= " + author_id + " class='authors'><b>" + author_name + " </b><i class='glyphicon glyphicon-plus'></i></b>");
             }
         }
         // joining all the authors elements from the author_list with comma,
@@ -405,7 +405,7 @@ $(function () { // this is the jquery shortcut for document.ready()
             $('#award-years').append("<button id="+ years[i] + " data-award=" + years[years.length-1] + " class='year-button'>" + years[i] + "</button>" + "   ");
         }
 
-        // $('html,body').animate({scrollTop: $("#award-years").offset().top}, 1000,'swing');
+        $('html,body').animate({scrollTop: $("#award-years").offset().top}, 1000,'swing');
 
         // adding an event listener to the newly created buttons right away within
         // this current function, other wise JS will ignore it outside of the function
@@ -430,9 +430,6 @@ $(function () { // this is the jquery shortcut for document.ready()
     function getBooks(evt) {
 
         console.log("Getting books from the server");
-
-        $("#book-info").hide();
-        $("#books").hide();
         
         var award_year = this.id; // this is the id on the year we clicked
         var award_id = $(this).attr("data-award");
@@ -506,7 +503,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
 
     function setToDefault(evt) {
-        if(!$(evt.target).is('.award-image', '#book-info')) {
+        if(!$(evt.target).is('.award-image', '#book-info', 'a#about')) {
 
         $('#book-info').hide();
         $("#award-years").hide();
