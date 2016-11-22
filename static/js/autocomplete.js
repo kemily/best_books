@@ -89,6 +89,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book-info').show();
         $("#award-years").hide();
         $("#books").hide();
+        $("#award-info").hide();
 
         var title = result.item.value;
         console.log(title);
@@ -177,21 +178,9 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('a.authors').on("click", getBio);
         $('#reviews').on("click", getReviews);
         
-        // stop the click event from bubbling to the document click event that hides
-        // all the data from the page
-        $('#book-info').on('click', function(evt) {
-            evt.stopPropagation();
-        });
     }
 
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
-
-    // stop the click event from bubbling to the document click event that hides
-    // all the data from the page
-    $('#books-autocomplete').on('autocompleteselect', function(evt) {
-        evt.stopPropagation();
-    });
-
 
 //////////// SUBMITTING AND SHOWING AUTHOR BIOGRAPHY BASE ON BOOK INFO ///////////
 
@@ -251,6 +240,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $("#award-years").hide();
         $("#books").hide();
         $("#all-books").empty();
+        $("#award-info").hide();
 
         var name = result.item.value;
         console.log(name);
@@ -280,7 +270,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><h5>" + title + "</h5><img src=" + image + " alt='Pretty book image' class='book-image'></div>");
+            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
         }
 
         $("#authors-autocomplete").val("");
@@ -292,21 +282,9 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $('.books').on("click", getBook);
 
-        // stop the click event from bubbling to the document click event that hides
-        // all the data from the page
-        $('.books').on('click', function(evt) {
-            evt.stopPropagation();
-        });
-
     }
 
     $("#authors-autocomplete").on( "autocompleteselect", submitSelectedAuthor);
-
-    // stop the click event from bubbling to the document click event that hides
-    // all the data from the page
-    $('#authors-autocomplete').on('autocompleteselect', function(evt) {
-        evt.stopPropagation();
-    });
 
 //////////// SUBMITTING AND SHOWING BOOKS LIST BASE ON SEARCH FROM GENRES AUTOCOMPLETE ///////////
 
@@ -318,6 +296,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $("#award-years").hide();
         $("#books").hide();
         $("#all-books").empty();
+        $("#award-info").hide();
 
         var genre = result.item.value;
         console.log(genre);
@@ -349,7 +328,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><h5>" + title + "</h5><img src=" + image + " alt='Pretty book image' class='book-image'></div>");
+            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
         }
 
         $("#genres-autocomplete").val("");
@@ -367,12 +346,6 @@ $(function () { // this is the jquery shortcut for document.ready()
     }
 
     $("#genres-autocomplete").on( "autocompleteselect", submitSelectedGenre);
-
-    // stop the click event from bubbling to the document click event that hides
-    // all the data from the page
-    $('#genres-autocomplete').on('autocompleteselect', function(evt) {
-        evt.stopPropagation();
-    });
 
 //////////// SUBMITTING AND SHOWING AWARD YEARS BASE ON CHOSEN AWARD ///////////
 
@@ -419,12 +392,6 @@ $(function () { // this is the jquery shortcut for document.ready()
         // scope, since the buttons are existing in the html, but created as a result of 
         // award choosing
         $('.year-button').on("click", getBooks);
-
-        // stop the click event from bubbling to the document click event that hides
-        // all the data from the page
-        $('.year-button').on('click', function(evt) {
-            evt.stopPropagation();
-        });
 
     }
 
@@ -473,7 +440,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#all-books').append("<div id= " + book_id + " class='col-sm-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h5>" + title + "</h5></div>");
+            $('#all-books').append("<div id= " + book_id + " class='col-sm-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
         }
 
         $('html,body').animate({scrollTop: $("#books").offset().top}, 1000,'swing');
@@ -483,13 +450,6 @@ $(function () { // this is the jquery shortcut for document.ready()
         // scope, since the books are existing in the html, but created as a result of 
         // year choosing
         $('.books').on("click", getBook);
-
-        // stop the click event from bubbling to the document click event that hides
-        // all the data from the page
-        $('.books').on('click', function(evt) {
-            evt.stopPropagation();
-        });
-
     }
 
 
@@ -511,20 +471,22 @@ $(function () { // this is the jquery shortcut for document.ready()
 
 
     function setToDefault(evt) {
-        if(!$(evt.target).is('.award-image', '#book-info', 'a#about')) {
 
         $('#book-info').hide();
         $("#award-years").hide();
         $("#books").hide();
         $("#award-info").hide();
-      }
     }
 
-    $(document).on('click', setToDefault);
+    $('.navbar-brand').on('click', setToDefault);
 
-
+    // clear all the data from the input box if it's unfocused
     $('input').focusout(function(){
         $(this).val('');
     });
 
+    // goes to the top if clicked on the "Top" link in the nav bar
+    $('#top-scroll').on('click', function(){
+        $('html,body').animate({scrollTop: 0}, 1000,'swing');
+    });
 });
