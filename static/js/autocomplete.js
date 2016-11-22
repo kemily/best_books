@@ -473,7 +473,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
             console.log(title);
 
-            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><h5>" + title + "</h5><img src=" + image + " alt='Pretty book image' class='book-image'></div>");
+            $('#all-books').append("<div id= " + book_id + " class='col-sm-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h5>" + title + "</h5></div>");
         }
 
         $('html,body').animate({scrollTop: $("#books").offset().top}, 1000,'swing');
@@ -516,9 +516,15 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book-info').hide();
         $("#award-years").hide();
         $("#books").hide();
+        $("#award-info").hide();
       }
     }
 
     $(document).on('click', setToDefault);
+
+
+    $('input').focusout(function(){
+        $(this).val('');
+    });
 
 });
