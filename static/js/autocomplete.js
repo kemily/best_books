@@ -504,5 +504,4 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('html,body').animate({scrollTop: 0}, 1000,'swing');
     });
 
-
 });

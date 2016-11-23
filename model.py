@@ -204,7 +204,10 @@ def connect_to_db(app, db_uri='postgresql:///bestbooks'):
 
     # Configure to use our PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-    app.config['SQLALCHEMY_ECHO'] = True
+
+    # to see all the app sqlalchemy queries when running the file
+    # app.config['SQLALCHEMY_ECHO'] = True
+
     db.app = app
     db.init_app(app)
 
@@ -246,7 +249,6 @@ def example_data():
 
     db.session.add_all([new_book, new_award, new_genre, new_author])
     db.session.commit()
-
 
     new_bookaward = BookAward(book_id=1,
                               award_id=1,
