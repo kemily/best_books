@@ -199,11 +199,11 @@ class BookAuthor(db.Model):
 ##############################################################################
 # Helper functions
 
-def connect_to_db(app):
+def connect_to_db(app, db_uri='postgresql:///bestbooks'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///bestbooks'
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
@@ -224,15 +224,6 @@ if __name__ == "__main__":
 # Example data
 
 def example_data():
-
-    Book.query.delete()
-    Award.query.delete()
-    BookAward.query.delete()
-    Genre.query.delete()
-    BookGenre.query.delete()
-    Author.query.delete()
-    BookAuthor.query.delete()
-
 
     new_book = Book(title="War and Peace",
                     description="A great art by Leo Tolstoy",

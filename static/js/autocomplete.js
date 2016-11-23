@@ -19,6 +19,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         var titles = result.titles_list;
 
         $('#books-autocomplete').autocomplete({
+            autoFocus: true,
             source: titles,
             minLength: 1
         }); // give our user auto complete
@@ -47,6 +48,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         var names = result.names_list;
 
         $('#authors-autocomplete').autocomplete({
+            autoFocus: true,
             source: names,
             minLength: 1
         }); // give our user auto complete
@@ -71,6 +73,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         var genres = result.genres_list;
 
         $('#genres-autocomplete').autocomplete({
+            autoFocus: true,
             source: genres,
             minLength: 1
         }); // give our user auto complete
