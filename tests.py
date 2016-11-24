@@ -49,7 +49,7 @@ class FlaskTestsDatabase(TestCase):
         db.drop_all()
 
     def test_book_autocomplete(self):
-        """Test books page."""
+        """Test search by book title input field."""
 
         result = self.client.get('/book-auto-complete')
 
@@ -58,20 +58,50 @@ class FlaskTestsDatabase(TestCase):
         self.assertIn("War and Peace", result.data)
         # print result.data
 
-    # def test_departments_details(self):
-    #     """Test departments page."""
+    def test_author_autocomplete(self):
+        """Test search by author name input field."""
 
-    #     result = self.client.get("/department/fin")
-    #     self.assertIn("Phone: 555-1000", result.data)
+        result = self.client.get('/author-auto-complete')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("names_list", result.data)
+        self.assertIn("Leo Tolstoy", result.data)
+        # print result.data
+
+    def test_genre_autocomplete(self):
+        """Test search by genre input field."""
+
+        result = self.client.get('/genre-auto-complete')
+
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("genres_list", result.data)
+        self.assertIn("Fiction", result.data)
+        # print result.data
 
 
-    # def test_login(self):
-    #     """Test login page."""
 
-    #     result = self.client.post("/login",
-    #                               data={"user_id": "rachel", "password": "123"},
-    #                               follow_redirects=True)
-    #     self.assertIn("You are a valued user", result.data)
+    # def test_search_by_title(self):
+    #     """Test search by title."""
+
+    #     result = self.client.get("/get-book-info", data={"title": "War and Peace"})
+    #     print result
+    #     self.assertEqual(result.status_code, 200)
+    #     self.assertEqual(result.content_type, 'application/json')
+    #     data = json.loads(result.data)
+    #     # self.assertEqual(data, {'title': 'War and Peace',
+    #     #                         'description': "A great art by Leo Tolstoy",
+    #     #                         'pages': 230,
+    #     #                         'published': 2005,
+    #     #                         'language': 'en',
+    #     #                         'author': 'Leo Tolstoy',
+    #     #                         'genre': 'Fiction',
+    #     #                         'awards': "The New York Times"})
+
+    #     self.assertEqual(data)
+
+    #     # AssertionError: 404 != 200
+    #     # AttributeError: 'NoneType' object has no attribute 'authors'
+
 
 
 
