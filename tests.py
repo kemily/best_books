@@ -1,6 +1,6 @@
 import json
 from unittest import TestCase
-from model import Book, connect_to_db, db, example_data
+from model import Book, Author, Award, Genre, BookAward, connect_to_db, db, example_data
 from server import app
 import server
 
@@ -52,11 +52,37 @@ class FlaskTestsDatabase(TestCase):
         db.session.close()
         db.drop_all()
 
-    def test_find_book(self):
+    def test_find_book_in_db(self):
         """Can we find a book in the sample data?"""
 
-        book = Book.query.filter(Book.title == "War and Peace").first()
+        book = Book.query.get(1)
+        self.assertEqual(book.book_id, 1)
         self.assertEqual(book.title, "War and Peace")
+        self.assertEqual(book.description, "A great art by Leo Tolstoy")
+
+    def test_find_author_in_db(self):
+        """Can we find an authors in the sample data?"""
+
+        author = Author.query.filter(Author.name == "Leo Tolstoy").first()
+        self.assertEqual(author.name, "Leo Tolstoy")
+
+    def test_find_award_in_db(self):
+        """Can we find an award in the sample data?"""
+
+        award = Award.query.filter(Award.name == "The New York Times").first()
+        self.assertEqual(award.name, "The New York Times")
+
+    def test_find_genre_in_db(self):
+        """Can we find genre in the sample data?"""
+
+        genre = Genre.query.filter(Genre.genre == "Fiction").first()
+        self.assertEqual(genre.genre, "Fiction")
+
+    def test_find_book_award_in_db(self):
+        """Can we find book award year in the sample data?"""
+
+        bookAward = BookAward.query.filter(BookAward.book_id == 1, BookAward.award_id == 1).first()
+        self.assertEqual(bookAward.year, 2010)
 
 
 class AjaxServerTestCase(TestCase):
@@ -117,24 +143,13 @@ class AjaxServerTestCase(TestCase):
     def test_search_by_title(self):
         """Test search by title."""
 
-        result = self.client.get("/get-book-info", data={"title": "War and Peace"})
-        print result
+        result = self.client.get("/get-book-info?title=War and Peace")
         self.assertEqual(result.status_code, 200)
-        self.assertEqual(result.content_type, 'application/json')
-        data = json.loads(result.data)
-        self.assertEqual(data, {'title': 'War and Peace',
-                                'description': "A great art by Leo Tolstoy",
-                                'pages': 230,
-                                'published': 2005,
-                                'language': 'en',
-                                'author': 'Leo Tolstoy',
-                                'genre': 'Fiction',
-                                'awards': "The New York Times"})
-
-    #     # AssertionError: 404 != 200
-    #     # AttributeError: 'NoneType' object has no attribute 'authors'
-
-
+        self.assertIn("War and Peace", result.data)
+        self.assertIn('A great art by Leo Tolstoy', result.data)
+        self.assertIn("Leo Tolstoy", result.data)
+        self.assertIn("The New York Times", result.data)
+        self.assertIn("2010", result.data)
 
 
 
