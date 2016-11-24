@@ -138,8 +138,6 @@ class AjaxServerTestCase(TestCase):
         self.assertIn("Fiction", result.data)
         # print result.data
 
-
-
     def test_search_by_title(self):
         """Test search by title."""
 
@@ -151,6 +149,27 @@ class AjaxServerTestCase(TestCase):
         self.assertIn("The New York Times", result.data)
         self.assertIn("2010", result.data)
 
+    def test_search_by_author(self):
+        """Test search by author's name."""
+
+        result = self.client.get("/get-author-books?name=Leo Tolstoy")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("books_list", result.data)
+        self.assertIn('Leo Tolstoy', result.data)
+        self.assertIn("War and Peace", result.data)
+        self.assertIn("A great art by Leo Tolstoy", result.data)
+        self.assertIn("2005", result.data)
+
+    def test_search_by_genre(self):
+        """Test search books by genre."""
+
+        result = self.client.get("/get-genre-books?genre=Fiction")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("books_list", result.data)
+        self.assertIn('Fiction', result.data)
+        self.assertIn("War and Peace", result.data)
+        self.assertIn("some url", result.data)
+        self.assertIn("230", result.data)
 
 
 
