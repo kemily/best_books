@@ -13,16 +13,21 @@ class FlaskTestsBasic(TestCase):
 
         # Get the Flask test client
         self.client = app.test_client()
-        connect_to_db(app)
+        connect_to_db(app, "postgresql:///testdb")
 
         # Show Flask errors that happen during tests
         app.config['TESTING'] = True
+
+        # Create tables and add sample data
+        db.create_all()
+        example_data()
 
     def test_index(self):
         """Test homepage page."""
 
         result = self.client.get("/")
         self.assertIn("Best Books!", result.data)
+
 
 class FlaskTestsDatabase(TestCase):
     """Flask tests that use the database."""
@@ -109,24 +114,22 @@ class AjaxServerTestCase(TestCase):
 
 
 
-    # def test_search_by_title(self):
-    #     """Test search by title."""
+    def test_search_by_title(self):
+        """Test search by title."""
 
-    #     result = self.client.get("/get-book-info", data={"title": "War and Peace"})
-    #     print result
-    #     self.assertEqual(result.status_code, 200)
-    #     self.assertEqual(result.content_type, 'application/json')
-    #     data = json.loads(result.data)
-    #     # self.assertEqual(data, {'title': 'War and Peace',
-    #     #                         'description': "A great art by Leo Tolstoy",
-    #     #                         'pages': 230,
-    #     #                         'published': 2005,
-    #     #                         'language': 'en',
-    #     #                         'author': 'Leo Tolstoy',
-    #     #                         'genre': 'Fiction',
-    #     #                         'awards': "The New York Times"})
-
-    #     self.assertEqual(data)
+        result = self.client.get("/get-book-info", data={"title": "War and Peace"})
+        print result
+        self.assertEqual(result.status_code, 200)
+        self.assertEqual(result.content_type, 'application/json')
+        data = json.loads(result.data)
+        self.assertEqual(data, {'title': 'War and Peace',
+                                'description': "A great art by Leo Tolstoy",
+                                'pages': 230,
+                                'published': 2005,
+                                'language': 'en',
+                                'author': 'Leo Tolstoy',
+                                'genre': 'Fiction',
+                                'awards': "The New York Times"})
 
     #     # AssertionError: 404 != 200
     #     # AttributeError: 'NoneType' object has no attribute 'authors'
