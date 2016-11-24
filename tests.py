@@ -1,6 +1,6 @@
 import json
 from unittest import TestCase
-from model import connect_to_db, db, example_data
+from model import Book, connect_to_db, db, example_data
 from server import app
 import server
 
@@ -24,8 +24,37 @@ class FlaskTestsBasic(TestCase):
         result = self.client.get("/")
         self.assertIn("Best Books!", result.data)
 
-
 class FlaskTestsDatabase(TestCase):
+    """Flask tests that use the database."""
+
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        # Get the Flask test client
+        self.client = app.test_client()
+        app.config['TESTING'] = True
+
+        # Connect to test database
+        connect_to_db(app, "postgresql:///testdb")
+
+        # Create tables and add sample data
+        db.create_all()
+        example_data()
+
+    def tearDown(self):
+        """Do at end of every test."""
+
+        db.session.close()
+        db.drop_all()
+
+    def test_find_book(self):
+        """Can we find a book in the sample data?"""
+
+        book = Book.query.filter(Book.title == "War and Peace").first()
+        self.assertEqual(book.title, "War and Peace")
+
+
+class AjaxServerTestCase(TestCase):
     """Flask tests that use the database."""
 
     def setUp(self):

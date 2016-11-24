@@ -237,24 +237,23 @@ def example_data():
                     isbn13="869403-13",
                     image_url="some url")
 
-    new_author = Author(goodreads_author_id=456,
-                        name="Leo Tolstoy",
-                        biography="Leo Tolstoy is a famous Russian author")
-
     new_award = Award(name="The New York Times",
                       description="The NYT newspaper is a big publication that every year sets the best 10 books of the year",
                       image_url="award_url")
 
+
+    new_author = Author(goodreads_author_id=456,
+                        name="Leo Tolstoy",
+                        biography="Leo Tolstoy is a famous Russian author")
+
     new_genre = Genre(genre="Fiction")
 
-    db.session.add_all([new_book, new_award, new_genre, new_author])
+    db.session.add_all([new_book, new_award, new_author, new_genre])
     db.session.commit()
 
     new_bookaward = BookAward(book_id=1,
                               award_id=1,
                               year=2010)
-
-    new_genre = Genre(genre="Fiction")
 
     new_bookgenre = BookGenre(book_id=1,
                               genre_id=1)
@@ -262,6 +261,6 @@ def example_data():
     new_bookauthor = BookAuthor(book_id=1,
                                 author_id=1)
 
-    db.session.add_all([new_bookaward, new_genre, new_bookgenre, new_bookauthor])
+    db.session.add_all([new_bookaward, new_bookgenre, new_bookauthor])
 
     db.session.commit()
