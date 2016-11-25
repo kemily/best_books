@@ -171,6 +171,42 @@ class AjaxServerTestCase(TestCase):
         self.assertIn("some url", result.data)
         self.assertIn("230", result.data)
 
+    def test_search_years_by_award(self):
+        """Test search award years by award id."""
+
+        result = self.client.get("/get-award-year?id=1")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("award", result.data)
+        self.assertIn("The NYT newspaper is a big publication that every year sets the best 10 books of the year", result.data)
+        self.assertIn("years_list", result.data)
+        self.assertIn("2010", result.data)
+        self.assertIn("The New York Times", result.data)
+
+    def test_search_books_by_year(self):
+        """Test search books by award year."""
+
+        result = self.client.get("/get-books?year=2010&award_id=1")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("books_list", result.data)
+        self.assertIn("A great art by Leo Tolstoy", result.data)
+        self.assertIn("2005", result.data)
+        self.assertIn("some url", result.data)
+        self.assertIn("en", result.data)
+
+    def test_get_authors_bio(self):
+        """Test get author's bio by the chosen book."""
+
+        result = self.client.get("/get-authors-bio?author_id=1")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("author_bio", result.data)
+        self.assertIn("Leo Tolstoy is a famous Russian author", result.data)
+
+    def test_get_goodreads_reviews(self):
+        """Test get goodreads review of the selected book."""
+
+        result = self.client.get("/get-goodreads-reviews?title=War and Peace")
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("goodreads_widget", result.data)
 
 
 if __name__ == "__main__":
