@@ -1,36 +1,11 @@
-import json
 from unittest import TestCase
 from model import Book, Author, Award, Genre, BookAward, connect_to_db, db, example_data
 from server import app
-import server
 
-
-class FlaskTestsBasic(TestCase):
-    """Flask tests."""
-
-    def setUp(self):
-        """Stuff to do before every test."""
-
-        # Get the Flask test client
-        self.client = app.test_client()
-        connect_to_db(app, "postgresql:///testdb")
-
-        # Show Flask errors that happen during tests
-        app.config['TESTING'] = True
-
-        # Create tables and add sample data
-        db.create_all()
-        example_data()
-
-    def test_index(self):
-        """Test homepage page."""
-
-        result = self.client.get("/")
-        self.assertIn("Best Books!", result.data)
 
 
 class FlaskTestsDatabase(TestCase):
-    """Flask tests that use the database."""
+    """Flask tests that test the database ."""
 
     def setUp(self):
         """Stuff to do before every test."""
@@ -60,11 +35,39 @@ class FlaskTestsDatabase(TestCase):
         self.assertEqual(book.title, "War and Peace")
         self.assertEqual(book.description, "A great art by Leo Tolstoy")
 
+    def test_book_repr_method(self):
+        """Is a book object represented according to _repr_ method?"""
+        book = Book.query.get(1)
+        self.assertEqual(repr(book), '<Book id=1 title=War and Peace>')
+
+    def test_book_to_dict_method(self):
+        """Is a book object represented as a dictionary?"""
+        book = Book.query.get(1)
+        self.assertEqual(book.to_dict(), {'id': 1,
+                                          'title': 'War and Peace',
+                                          'url': 'some url',
+                                          'description': 'A great art by Leo Tolstoy',
+                                          'pages': 230,
+                                          'published': 2005,
+                                          'language': 'en'})
+
     def test_find_author_in_db(self):
         """Can we find an authors in the sample data?"""
 
         author = Author.query.filter(Author.name == "Leo Tolstoy").first()
         self.assertEqual(author.name, "Leo Tolstoy")
+
+    def test_author_repr_method(self):
+        """Is an author object represented according to _repr_ method?"""
+        author = Author.query.get(1)
+        self.assertEqual(repr(author), '<Author author_id=1 name=Leo Tolstoy>')
+
+    def test_author_to_dict_method(self):
+        """Is an author object represented as a dictionary?"""
+        author = Author.query.get(1)
+        self.assertEqual(author.to_dict(), {'authorId': 1,
+                                            'name': 'Leo Tolstoy',
+                                            'biography': 'Leo Tolstoy is a famous Russian author'})
 
     def test_find_award_in_db(self):
         """Can we find an award in the sample data?"""
@@ -72,11 +75,29 @@ class FlaskTestsDatabase(TestCase):
         award = Award.query.filter(Award.name == "The New York Times").first()
         self.assertEqual(award.name, "The New York Times")
 
+    def test_award_repr_method(self):
+        """Is an award object represented according to _repr_ method?"""
+        award = Award.query.get(1)
+        self.assertEqual(repr(award), '<Award id=1 name=The New York Times>')
+
+    def test_award_to_dict_method(self):
+        """Is an award object represented as a dictionary?"""
+        award = Award.query.get(1)
+        self.assertEqual(award.to_dict(), {'id': 1,
+                                           'name': 'The New York Times',
+                                           'description': 'The NYT newspaper is a big publication that every year sets the best 10 books of the year',
+                                           'url': 'award_url'})
+
     def test_find_genre_in_db(self):
         """Can we find genre in the sample data?"""
 
         genre = Genre.query.filter(Genre.genre == "Fiction").first()
         self.assertEqual(genre.genre, "Fiction")
+
+    def test_genre_repr_method(self):
+        """Is a genre object represented according to _repr_ method?"""
+        genre = Genre.query.get(1)
+        self.assertEqual(repr(genre), '<Genre genre_id=1 genre=Fiction>')
 
     def test_find_book_award_in_db(self):
         """Can we find book award year in the sample data?"""
@@ -84,9 +105,44 @@ class FlaskTestsDatabase(TestCase):
         bookAward = BookAward.query.filter(BookAward.book_id == 1, BookAward.award_id == 1).first()
         self.assertEqual(bookAward.year, 2010)
 
+    def test_bookAward_repr_method(self):
+        """Is a bookAward object represented according to _repr_ method?"""
+        bookAward = BookAward.query.get(1)
+        self.assertEqual(repr(bookAward), '<Book book_id=1 award_id=1 year=2010>')
+
+    def test_bookAward_to_dict_method(self):
+        """Is an bookAward object represented as a dictionary?"""
+        bookAward = BookAward.query.get(1)
+        self.assertEqual(bookAward.to_dict(), {'book': 'War and Peace',
+                                               'award': 'The New York Times',
+                                               'year': 2010})
+
+class FlaskTestsBasic(TestCase):
+    """Flask homepage server route test."""
+
+    def setUp(self):
+        """Stuff to do before every test."""
+
+        # Get the Flask test client
+        self.client = app.test_client()
+        connect_to_db(app, "postgresql:///testdb")
+
+        # Show Flask errors that happen during tests
+        app.config['TESTING'] = True
+
+        # Create tables and add sample data
+        db.create_all()
+        example_data()
+
+    def test_index(self):
+        """Test homepage page."""
+
+        result = self.client.get("/")
+        self.assertIn("Best Books!", result.data)
+
 
 class AjaxServerTestCase(TestCase):
-    """Flask tests that use the database."""
+    """Flask ajax routes tests that use the database."""
 
     def setUp(self):
         """Stuff to do before every test."""

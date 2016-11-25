@@ -43,7 +43,10 @@ class Book(db.Model):
         return "<Book id=%s title=%s>" % (self.book_id, self.title)
 
     def to_dict(self):
-        """Turn a book object into a dictionary to represent the book."""
+        """Turn a book object into a dictionary to represent the book.
+
+        Useful for JSONification.
+        """
 
         return {
             'id': self.book_id,
@@ -70,7 +73,7 @@ class Award(db.Model):
         return "<Award id=%s name=%s>" % (self.award_id, self.name)
 
     def to_dict(self):
-        """Turn an award object into a dictionary."""
+        """Turn an award object into a dictionary. Useful for JSONification."""
 
         return {
             'id': self.award_id,
@@ -103,7 +106,7 @@ class BookAward(db.Model):
         return "<Book book_id=%s award_id=%s year=%s>" % (self.book_id, self.award_id, self.year)
 
     def to_dict(self):
-        """Turn an book_award object into a dictionary."""
+        """Turn an book_award object into a dictionary. Useful for JSONification."""
 
         return {
             'book': self.book.title,
@@ -126,7 +129,7 @@ class Genre(db.Model):
         return "<Genre genre_id=%s genre=%s>" % (self.genre_id, self.genre)
 
     def to_dict(self):
-        """Turn an genre object into a dictionary."""
+        """Turn an genre object into a dictionary. Useful for JSONification."""
 
         return {
             'id': self.genre_id,
@@ -168,13 +171,15 @@ class Author(db.Model):
         return "<Author author_id=%s name=%s>" % (self.author_id, self.name)
 
     def to_dict(self):
-        """Turn an author object into a dictionary to represent the author."""
+        """Turn an author object into a dictionary to represent the author.
+
+        Useful for JSONification.
+        """
 
         return {
             'authorId': self.author_id,
             'name': self.name,
-            'biography': self.biography,
-            'goodreadsAuthorId': self.goodreads_author_id
+            'biography': self.biography
         }
 
 class BookAuthor(db.Model):
@@ -201,13 +206,11 @@ class BookAuthor(db.Model):
 
 def connect_to_db(app, db_uri='postgresql:///bestbooks'):
     """Connect the database to our Flask app."""
-
     # Configure to use our PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 
     # to see all the app sqlalchemy queries when running the file
     # app.config['SQLALCHEMY_ECHO'] = True
-
     db.app = app
     db.init_app(app)
 
@@ -219,7 +222,7 @@ if __name__ == "__main__":
     from server import app
     connect_to_db(app)
     print "Connected to DB."
-     # Create tables
+    # Create tables
     # db.create_all()
 
 
