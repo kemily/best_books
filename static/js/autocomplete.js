@@ -1,57 +1,55 @@
-// AJAX for Best Books
+// JS, JQuery and AJAX calls for Best Books
 
 ///////////////////// LOADING BOOK AUTOCOMPLETE ////////////////////////
 
 $(function () { // this is the jquery shortcut for document.ready()
 
-    // when the page is loaded the list of books titles is loaded from the database
-    // and will appear in the auto complete drop down manu
+    // when the page is loaded the list of current books titles is loaded from the database
+    // and will appear in the auto complete drop down menu
     function bookAutoComplete(evt) {
-        console.log("doing book autocomplete magic!");
 
+        // get request for the current books' titles list from the server
         $.get("/book-auto-complete", showAutoComplete);
     }
 
+    // show user auto complete
     function showAutoComplete(result) {
 
-        console.log("YAY!");
-
+        // list of books' titles from the server
         var titles = result.titles_list;
 
+        // using jquery autocomplete widget to represent book search autocomplete
         $('#books-autocomplete').autocomplete({
             autoFocus: true,
             source: titles,
             minLength: 1
-        }); // give our user auto complete
-
+        });
     }
 
     var functionCall = bookAutoComplete();
 
-
-
 ///////////////////// LOADING AUTHOR AUTOCOMPLETE ////////////////////////
 
-
-    // when the page is loaded the list of books authors is loaded from the database
-    // and will appear in the auto complete drop down manu
+    // when the page is loaded the list of current authors' names is loaded from the database
+    // and will appear in the auto complete drop down menu
     function authorAutoComplete(evt) {
-        console.log("doing author autocomplete magic!");
 
+        // get request for the current authors' names list from the server
         $.get("/author-auto-complete", showAuthorAutoComplete);
     }
 
+    // show user auto complete
     function showAuthorAutoComplete(result) {
 
-        console.log("Showing author's book");
-
+        // list of authors' names from the server
         var names = result.names_list;
 
+        // using jquery autocomplete widget to represent author's books search autocomplete
         $('#authors-autocomplete').autocomplete({
             autoFocus: true,
             source: names,
             minLength: 1
-        }); // give our user auto complete
+        });
     }
 
     var authorCall = authorAutoComplete();
@@ -61,49 +59,48 @@ $(function () { // this is the jquery shortcut for document.ready()
     // when the page is loaded the list of genres is loaded from the database
     // and will appear in the auto complete drop down manu
     function genresAutoComplete(evt) {
-        console.log("doing genres autocomplete magic!");
-
+        
+        // get request for the available genres list from the server
         $.get("/genre-auto-complete", showGenreAutoComplete);
     }
 
+    // show user auto complete
     function showGenreAutoComplete(result) {
 
-        console.log("Genres are getting back from the server!");
-
+        // list of genres from the server
         var genres = result.genres_list;
 
+        // using jquery autocomplete widget to represent books by genre search autocomplete
         $('#genres-autocomplete').autocomplete({
             autoFocus: true,
             source: genres,
             minLength: 1
-        }); // give our user auto complete
-
+        });
     }
 
     var genresCall = genresAutoComplete();
 
-
-
-//////////// SUBMITTING AND SHOWING BOOK INFO BASE ON SEARCH FROM AUTOCOMPLETE ///////////
-
+//////////////// SUBMITTING AND SHOWING BOOK INFO BASE ON A SEARCH  ///////////////////
+    
+    // send request to the server to get info about selected book
     function submitSelectedResults(evt, result) {
-        console.log("submitting the result to the server!");
         
+        // adding some user experience functionality
+        // so user will see only book information only
         $('#book-info').show();
         $("#award-years").hide();
         $("#books").hide();
         $("#award-info").hide();
 
+        // getting value of the chosen title from the autocomplete
         var title = result.item.value;
-        console.log(title);
 
+        // get request for the chosen book information from the server
         $.get("/get-book-info", {"title": title}, showBookInfo);
     }
 
+    
     function showBookInfo(result) {
-
-        console.log("Received book info from the server");
-
 
         var id = result.id;
         var title = result.title;
@@ -185,6 +182,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         
     }
 
+    // from autocomplete on book title selection call submitSelectedResults function
     $("#books-autocomplete").on( "autocompleteselect", submitSelectedResults);
 
 //////////// SUBMITTING AND SHOWING AUTHOR BIOGRAPHY BASE ON BOOK INFO ///////////
