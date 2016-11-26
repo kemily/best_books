@@ -3,7 +3,6 @@ from model import Book, Author, Award, Genre, BookAward, connect_to_db, db, exam
 from server import app
 
 
-
 class FlaskTestsDatabase(TestCase):
     """Flask tests that test the database ."""
 

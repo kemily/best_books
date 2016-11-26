@@ -1,11 +1,8 @@
 """Utility file to seed bestbooks database from GoodReads API calls"""
 import os
-import sys
 
 import xmltodict
 import requests
-
-from sqlalchemy import func
 
 from model import Book, Author, connect_to_db, db
 from server import app

@@ -54,8 +54,8 @@ def load_books():
                                                     BookAward.award_id == book_award.award_id).first()
             if not get_book_award:
                 books_awards = BookAward(book_id=book.book_id,
-                                          award_id=book_award.award_id,
-                                          year=year)
+                                         award_id=book_award.award_id,
+                                         year=year)
                 db.session.add(books_awards)
                 db.session.commit()
 
@@ -72,7 +72,7 @@ def load_books():
                                                     BookGenre.genre_id == new_genre.genre_id).first()
             if not get_book_genre:
                 books_genres = BookGenre(book_id=book.book_id,
-                                          genre_id=new_genre.genre_id)
+                                         genre_id=new_genre.genre_id)
                 db.session.add(books_genres)
                 db.session.commit()
 

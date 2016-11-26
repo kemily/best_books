@@ -1,4 +1,4 @@
-"""Utility file to seed bestbooks database from award_info file in data/"""
+"""Utility file to seed bestbooks database from award_info file in data"""
 import csv
 from sqlalchemy import func
 
