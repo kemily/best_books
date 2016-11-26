@@ -1,4 +1,5 @@
-"""Utility file to seed bestbooks database from bestbooks file in data/"""
+"""Utility file to seed bestbooks database from bestbooks file in data"""
+import os
 
 import csv
 from sqlalchemy import func
@@ -14,7 +15,13 @@ def load_books():
     print "Book!"
 
     # open the csv file and unpack it
-    with open("/home/vagrant/src/best_books/data/bestbooks.csv") as general:
+    # with open("/home/vagrant/src/best_books/data/bestbooks.csv") as general:
+
+    # creating relative path, base upon the _file_ Python global.
+    # it makes the code to be more portable and easier to work with
+    filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "bestbooks.csv")
+    print "Loading filename: %s" % filename
+    with open(filename) as general:
         reader = csv.reader(general)
 
         #unpacking each row in the file and looping over it.

@@ -1,6 +1,7 @@
 """Best book awards."""
 
 import os
+import sys
 
 import xmltodict
 import requests
@@ -25,7 +26,13 @@ app.secret_key = "ABC"
 # This is horrible. Fix this so that, instead, it raises an error.
 app.jinja_env.undefined = StrictUndefined
 
-goodreads_key = os.environ['GOODREADS_KEY']
+# If a file runs without GOODREADS KEY available, it will give an error
+# and the file will stop running
+if 'GOODREADS_KEY' in os.environ:
+    goodreads_key = os.environ['GOODREADS_KEY']
+else:
+    print "ERROR: You must supply a valid Goodreads API key in the 'GOODREADS_KEY' environment variable in order to use this script!"
+    sys.exit(1)
 
 # awards = [
 #     {"id": 1, "url": "/static/pictures/ManBookerPrize1.png"},

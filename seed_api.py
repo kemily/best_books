@@ -1,5 +1,6 @@
 """Utility file to seed bestbooks database from GoodReads API calls"""
 import os
+import sys
 
 import xmltodict
 import requests
@@ -7,7 +8,13 @@ import requests
 from model import Book, Author, connect_to_db, db
 from server import app
 
-goodreads_key = os.environ['GOODREADS_KEY']
+# If a file runs without GOODREADS KEY available in the env, it will give an error
+# and the file will stop running
+if 'GOODREADS_KEY' in os.environ:
+    goodreads_key = os.environ['GOODREADS_KEY']
+else:
+    print "ERROR: You must supply a valid Goodreads API key in the 'GOODREADS_KEY' environment variable in order to use this script!"
+    sys.exit(1)
 
 
 def load_api_books():

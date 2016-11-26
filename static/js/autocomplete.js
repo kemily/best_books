@@ -161,12 +161,14 @@ $(function () { // this is the jquery shortcut for document.ready()
         // so this way award represented in nice format with commas in the right places
         var all_book_awards = award_list.join(", ");
 
+        if (pages !== null) {
+                $('#pages').html("Handcover, " + pages + " pages");
+            }
         
         $('#book_image').attr('src', image);
         $('#book_title').html(title);
         $('#authors').html("by " + all_authors);
         $('#description').html(description);
-        $('#pages').html("Handcover, " + pages + " pages");
         $('#published').html("Published in " + published);
         $('#genre').html("Genre: " + genre);
         $('#book_award').html("Book received an award in " + all_book_awards);
