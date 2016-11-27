@@ -262,14 +262,15 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     function showAuthorBooks(result) {
 
+        // getting a list of author's books dictionaries and author's name
+        var author_books = result.books_list;
+        var author_name = result.name;
+
         // adding UX functionality when showing author's books
         $("#books").show();
         $("#authors-autocomplete").val("");
         $('#by-info').html("<h4>Books that were written by "+ author_name +"</h4>");
 
-        // getting a list of author's books dictionaries and author's name
-        var author_books = result.books_list;
-        var author_name = result.name;
         // itterating through the author's books list and getting the needed info
         for (var i = 0; i < author_books.length; i++) {
             var image = author_books[i].url;
