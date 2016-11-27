@@ -90,7 +90,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#book-info').show();
         $("#award-years").hide();
         $("#books").hide();
-        $("#award-info").hide();
+        $("#award-info, #award-name").hide();
 
         // getting value of the chosen title from the autocomplete
         var title = result.item.value;
@@ -153,7 +153,7 @@ $(function () { // this is the jquery shortcut for document.ready()
             var book_award = awards[j].award;
             // convirting each award into html element and pushing it
             // to the award_list
-            award_list.push("<em class='book_awards'>"+ year + " by " + book_award +"</em>");
+            award_list.push("<span class='book_awards'> "+ year + " by " + book_award +"</span>");
         }
 
         // joining all the awards elements from the award_list with comma,
@@ -171,7 +171,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#description').html(description);
         $('#published').html("Published in " + published);
         $('#genre').html("Genre: " + genre);
-        $('#book_award').html("Book received an award in " + all_book_awards);
+        $('#book_award').html("<b>Book received an award in " + all_book_awards + "</b>");
         
         // adding DOM changes when the book info is shown  
         $("#books-autocomplete").val("");
@@ -239,6 +239,9 @@ $(function () { // this is the jquery shortcut for document.ready()
         
         // adding the widget to the DOM
         $("#goodreads-reviews").html(widget);
+
+        // adding animation to scroll to the goodreads reviewswidget 
+        $('html,body').animate({scrollTop: $("#goodreads-reviews").offset().top}, 1000,'swing');
     }
 
 ////////////////// SHOWING BOOKS LIST BASE ON SEARCH FROM AUTHOR AUTOCOMPLETE //////////////
@@ -250,7 +253,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $("#award-years").hide();
         $("#books").hide();
         $("#all-books").empty();
-        $("#award-info").hide();
+        $("#award-info, #award-name").hide();
 
         // getting author's name value from the autocomplete
         var name = result.item.value;
@@ -305,7 +308,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $("#award-years").hide();
         $("#books").hide();
         $("#all-books").empty();
-        $("#award-info").hide();
+        $("#award-info, #award-name").hide();
 
         // getting genre value from the autocomplete
         var genre = result.item.value;
@@ -360,7 +363,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         // if any of the info from the book search is 
         // still on the page, it should disappear when an eward is choosen 
-        $("#book-info", "#books", "#award-info", "#award-name").hide();
+        $("#book-info, #books").hide();
         // since we are usuing append for the years buttons, every time when 
         // award is clicked we are cleaning the previous years from the div 
         // and appending the new ones
@@ -372,7 +375,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
     function showAwardYears(result) {
         $("#award-years").show();
-        $("#award-info").show();
+        $("#award-info, #award-name").show();
         
         // getting a list of years, award name and award description from the server
         var years = result.years_list;

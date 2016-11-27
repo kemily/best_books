@@ -9,7 +9,7 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
-h1, h2, h6, label, .navbar-brand, .modal { 
+h1, h3, h6, label, .navbar-brand, .modal, #book_title { 
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -19,11 +19,16 @@ a {
     cursor: pointer;
 }
 
+a:hover {
+    text-decoration: none;
+    color: rgba(191, 191, 191, 0.8);
+}
+
 button {
     background-color: #1A9CDC;
     border: none;
     color: white;
-    padding: 10px 19.5px;
+    padding: 7px 21px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -35,7 +40,14 @@ button {
 }
 
 button:hover {
+    /*background-color: #1A9CDC;*/
+    background: rgba(191, 191, 191, 0.8);
+}
 
+.wrapper {
+    width: 770px;
+    margin: 50px auto;
+    /*padding: 20px;*/
 }
 
 /*NAVBAR*/
@@ -104,6 +116,7 @@ a.navbar-brand {
     background-color: #1A9CDC; 
     opacity: 0.9;
     text-align: center;
+    color: #fff;
 }
 
 /*SEARCH AUTOCOMPLETE*/
@@ -138,24 +151,29 @@ a.navbar-brand {
 
 /*AWARDS*/
 
+.floating-awards {
+    display: inline-block;
+    width: 200px;
+    height: 270px;
+    margin: 40px;
+}
+
+.floating-awards img:hover {
+    cursor: pointer;
+    opacity: .5;
+}
+
 #awards img {
     width:200px;
     border: 0;
 }
 
-.wrapper {
-    width: 700px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-#award-name {
+#award-name, #book_title {
     font-size: 35px;
     letter-spacing: -0.01em;
     font-weight: 400;
     margin-bottom: 20px;
     line-height: 1.2em;
-    color: #242424;
 }
 
 #award-info {
@@ -163,7 +181,6 @@ a.navbar-brand {
     font-size: 20px;
     line-height: 1.6em;
     margin-bottom: 20px;
-    color: #2C2C2C;
     text-align: justify;
 }
 
@@ -172,49 +189,73 @@ a.navbar-brand {
     font-size: 20px;
     color: #7E7E7E;
     margin-top: 15px;
+    padding-bottom: 10px;
     line-height: 1.4em;
 }
 
-
-
-/*@media screen and (min-width: 768px)
-.jumbotron {
+@media screen and (min-width: 300px)
+.wrapper {
     padding-right: 60px;
     padding-left: 60px;
-}*/
-
-/*BOOK DITAILS*/
-
-#book-info {
-    display: none;
-    position: relative;
 }
 
-#bio {
-    width: 800px;
-    display: none;
-    /*border: 1px solid gray;*/
-}
-
-.floating-awards {
-    display: inline-block;
-    width: 200px;
-    height: 270px;
-    margin: 40px;
-}
+/*BOOKS*/
 
 .books {
     display: table-row;
     /*float: left;*/
     height: 270px;
-    margin-bottom: 40px;
+    margin: 40px 0;
 }
 
 .book-image {
     width: 140px;
 }
 
-/*return to the top side button*/
+.books img:hover {
+    cursor: pointer;
+    opacity: .5;
+}
+
+/*BOOK DITAILS*/
+
+#book-info {
+    display: none;
+    position: relative;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    line-height: 1.2em;
+    font-weight: 400;
+}
+
+#book_title {
+    font-size: 25px;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+    margin-bottom: 20px;
+    line-height: 1.2em;
+}
+
+#book-info img {
+    width: 20%;
+    float: left;
+    margin: 8px 15px 0 0;
+}
+
+#bio {
+    /*width: inherit;*/
+    display: inline;
+    background-color: rgba(191, 191, 191, 0.6);
+}
+
+#book_award {
+    margin: 10px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #7E7E7E;
+    border-top: 1px solid #7E7E7E;
+}
+
+/*RETURN TO THE TOP SIDE BUTTON*/
 #return-to-top {
     position: fixed;
     bottom: 20px;
