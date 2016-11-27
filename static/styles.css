@@ -1,17 +1,117 @@
-body { padding-top: 70px; 
+html, body {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+        }
+
+body { 
+    padding-top: 70px; 
+    font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h6, label, .navbar-brand, .modal { 
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*-------------- navbar styling ----------------*/
+
+
+.navbar-inverse {
+    background-color: #1A9CDC;
+    border: none;
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav li a:hover {
+    color: #333;
+}
+
+a.navbar-brand {
+    font-size: 30px;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    line-height: 1.2em;
+    margin-bottom: 15px;
+}
+
+.navbar-inverse .navbar-nav>li>a, .modal-title {
+    font-size: 20px;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    line-height: 1.2em;
+    margin-top: 8px;
+}
+
+/*------- modal window style ----------------*/
+
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal-body p {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    line-height: 1.2em;
+    margin: 0 auto;
+}
+
+.btn-default {
+    background-color: #1A9CDC; 
+    opacity: 0.9;
+    text-align: center;
+}
+
+/*------- search autocomplete fields style ----------------*/
+
+#search-boxes {
+    margin: 40px auto;
+}
+
+.form-inline input {
+    margin: 0 auto;
 }
 
 #books-autocomplete {
-    width: 30%;
-}
-
-#authors-autocomplete {
-    width:20%;
+    width: 40%;
 }
 
 #genres-autocomplete {
     width:20%;
 }
+
+#authors-autocomplete{
+    width:30%;
+}
+
+.ui-autocomplete {
+    max-width: 450px;
+     /*prevent vertical scrollbar */
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+/*------- end of search autocomplete fields styling ----------------*/
+
 
 #awards img {
     width:200px;
@@ -29,15 +129,10 @@ body { padding-top: 70px;
     /*border: 1px solid gray;*/
 }
 
-#search-boxes {
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
 .floating-awards {
     display: inline-block;
     width: 200px;
-    height: 200px;
+    height: 270px;
     margin: 40px;
 }
 
@@ -52,6 +147,7 @@ body { padding-top: 70px;
     width: 140px;
 }
 
+/*return to the top side button*/
 #return-to-top {
     position: fixed;
     bottom: 20px;
@@ -86,7 +182,7 @@ body { padding-top: 70px;
 }
 
 #return-to-top:hover {
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(26,156,220,0.9);
 }
 
 #return-to-top:hover i {

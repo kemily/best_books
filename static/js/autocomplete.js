@@ -472,18 +472,6 @@ $(function () { // this is the jquery shortcut for document.ready()
 
 ////////////////////// EXTRA UX AND UI FUNCTIONALITY ///////////////////////////
 
-    // the page will be set to default settings when clicked on the 
-    // brand name on the navbar
-    function setToDefault(evt) {
-
-        $('#book-info').hide();
-        $("#award-years").hide();
-        $("#books").hide();
-        $("#award-info").hide();
-    }
-    $('.navbar-brand').on('click', setToDefault);
-
-
     // clear all the data from the input box if it's unfocused
     $('input').focusout(function(){
         $(this).val('');
