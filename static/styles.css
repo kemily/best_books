@@ -13,8 +13,32 @@ h1, h2, h6, label, .navbar-brand, .modal {
     font-family: 'Montserrat', sans-serif;
 }
 
-/*-------------- navbar styling ----------------*/
+a {
+    text-decoration: none;
+    color: #1A9CDC;
+    cursor: pointer;
+}
 
+button {
+    background-color: #1A9CDC;
+    border: none;
+    color: white;
+    padding: 10px 19.5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 6px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: 'Lato', sans-serif;
+}
+
+button:hover {
+
+}
+
+/*NAVBAR*/
 
 .navbar-inverse {
     background-color: #1A9CDC;
@@ -27,6 +51,7 @@ h1, h2, h6, label, .navbar-brand, .modal {
 
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-nav li a:hover {
     color: #333;
+    cursor: pointer;
 }
 
 a.navbar-brand {
@@ -45,7 +70,7 @@ a.navbar-brand {
     margin-top: 8px;
 }
 
-/*------- modal window style ----------------*/
+/*MODAL WINDOW*/
 
 .modal {
   text-align: center;
@@ -81,42 +106,84 @@ a.navbar-brand {
     text-align: center;
 }
 
-/*------- search autocomplete fields style ----------------*/
+/*SEARCH AUTOCOMPLETE*/
 
 #search-boxes {
     margin: 40px auto;
-}
-
-.form-inline input {
-    margin: 0 auto;
 }
 
 #books-autocomplete {
     width: 40%;
 }
 
-#genres-autocomplete {
+#genres-autocomplete, #authors-autocomplete {
     width:20%;
 }
 
-#authors-autocomplete{
-    width:30%;
+.form-inline input {
+    margin: 0 auto;
+}
+
+.form-inline label {
+    margin: 0 auto;
+    font-size: 15px;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    line-height: 1.2em;
 }
 
 .ui-autocomplete {
     max-width: 450px;
-     /*prevent vertical scrollbar */
-    overflow-y: hidden;
-    overflow-x: auto;
 }
 
-/*------- end of search autocomplete fields styling ----------------*/
-
+/*AWARDS*/
 
 #awards img {
     width:200px;
     border: 0;
 }
+
+.wrapper {
+    width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#award-name {
+    font-size: 35px;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+    margin-bottom: 20px;
+    line-height: 1.2em;
+    color: #242424;
+}
+
+#award-info {
+    font-family: 'Lato';
+    font-size: 20px;
+    line-height: 1.6em;
+    margin-bottom: 20px;
+    color: #2C2C2C;
+    text-align: justify;
+}
+
+#award-info p {
+    font-family: 'Lato';
+    font-size: 20px;
+    color: #7E7E7E;
+    margin-top: 15px;
+    line-height: 1.4em;
+}
+
+
+
+/*@media screen and (min-width: 768px)
+.jumbotron {
+    padding-right: 60px;
+    padding-left: 60px;
+}*/
+
+/*BOOK DITAILS*/
 
 #book-info {
     display: none;

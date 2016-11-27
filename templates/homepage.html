@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+    <!-- Navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -42,6 +43,7 @@
         </div>
     </div>
 
+    <!-- Autocomplete search input fields -->
     <div id="search-boxes" class="container">
         <form>
             <div class="form-inline">
@@ -52,8 +54,11 @@
             </div>
         </form>
     </div>
+    <!-- End of utocomplete search input fields -->
 
+    <!-- Awards -->
     <div id="awards" class="container">
+        <!-- Awards images -->
         {% for image in images %}
             <div class="floating-awards">
                 <a id="{{ image.id }}" class="award-image">
@@ -61,17 +66,27 @@
                 </a>
             </div>
         {% endfor %}
+    </div> <!-- End of award images -->
+        <div class="wrapper">
+        <!-- Award name -->
+        <div id="award-name"></div> 
+
+        <!-- Award info-->
+        <div id="award-info"></div>
+
+        <!-- Award years -->
+        <div id="award-years"></div>
     </div>
 
-    <div id="award-info" class="container"></div>
-    <div id="award-years" class="container"></div>
+    <!-- Books -->
     <div id="books" class="container">
         <p id="by-info"></p>
         <div id="all-books" class="row"></div>
-    </div>
+    </div> <!-- End of Books -->
+
+    <!-- Book info -->
     <div id="book-info" class="container">
-            <h3 id="book_title">
-            </h3>
+            <h3 id="book_title"></h3>
             <p>
                 <img id="book_image" src=" " alt="a pretty image of your selected book">
             </p>
@@ -84,11 +99,10 @@
             <p id="book_award"></p>
             <button id='reviews' class='reviews-btn'>Read Good Reads Reviews</button>
             <div id='goodreads-reviews'></div>
-    </div>
+    </div><!-- Book info -->
     <div>
         <!-- Return to Top -->
         <a href="javascript:" id="return-to-top"><i class='glyphicon glyphicon-chevron-up'></i></a>
     </div>
-
 
 {% endblock %}

@@ -360,9 +360,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         // if any of the info from the book search is 
         // still on the page, it should disappear when an eward is choosen 
-        $("#book-info").hide();
-        $("#books").hide();
-        $("#award-info").hide();
+        $("#book-info", "#books", "#award-info", "#award-name").hide();
         // since we are usuing append for the years buttons, every time when 
         // award is clicked we are cleaning the previous years from the div 
         // and appending the new ones
@@ -381,15 +379,16 @@ $(function () { // this is the jquery shortcut for document.ready()
         var award = result.award.description;
         var awardName = result.award.name;
 
+        $("#award-name").html("<h1>" + awardName + "</h1>");
         // Adding award description and further instructions to the DOM
-        $("#award-info").html(award + "<br> Choose any year under to check the books were awarded by " + awardName);
+        $("#award-info").html(award + "<p>Choose any year button to check the books that were awarded!<p/>");
         // itterating through the years list and adding them as buttons to the DOM
         for (var i = 0; i < years.length -1; i++) {
             $('#award-years').append("<button id="+ years[i] + " data-award=" + years[years.length-1] + " class='year-button'>" + years[i] + "</button>" + "   ");
         }
         
-        // adding animation to scroll to the chosen books by genre 
-        $('html,body').animate({scrollTop: $("#award-info").offset().top}, 1000,'swing');
+        // adding animation to scroll to the chosen award years
+        $('html,body').animate({scrollTop: $("#award-name").offset().top}, 1000,'swing');
 
         // adding an event listener to the newly created buttons right away within
         // this current function, otherwise JS will ignore it outside of the function
