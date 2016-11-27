@@ -2,7 +2,7 @@
 {% block content %}
 
     <!-- Navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -17,7 +17,7 @@
           <ul class="nav navbar-nav navbar-right">
             <!-- Trigger the modal with a link -->
             <li><a id="about" data-toggle="modal" data-target="#myModal">About</a></li>
-            <li><a id="top-scroll">Top</a></li>
+            <!-- <li><a id="top-scroll">Top</a></li> -->
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -92,7 +92,9 @@
                 </p>
                 <h3 id="book_title"></h3>
                 <p id="authors"></p>
-                <p id="bio"></p>
+                <div id="biography">
+                    <p id="bio"></p>
+                </div>
                 <p id="description"></p>
                 <p id="pages"></p>
                 <p id="published"></p>

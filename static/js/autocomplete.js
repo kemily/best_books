@@ -177,10 +177,10 @@ $(function () { // this is the jquery shortcut for document.ready()
         $("#books-autocomplete").val("");
         $("#goodreads-reviews").empty();
         $("#bio").empty();
-        $("#bio").hide();
+        $("#biography").hide();
 
         // adding animation to scroll to the newly shown book information
-        $('html,body').animate({scrollTop: $("#book_image").offset().top}, 1000,'swing');
+        $('html,body').animate({scrollTop: $("#book-info").offset().top}, 1000,'swing');
 
         // adding click events to the newly created html elements 
         $('a.authors').on("click", getBio);
@@ -212,7 +212,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         
         // adding bio info to the DOM
         $("#bio").html("<em>" + biography + "</em>");
-        $("#bio").toggle();
+        $("#biography").toggle();
     }
 
 ///////////////// SHOWING REVIEWS BASE ON SELECTED BOOK ///////////////////
@@ -241,7 +241,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $("#goodreads-reviews").html(widget);
 
         // adding animation to scroll to the goodreads reviewswidget 
-        $('html,body').animate({scrollTop: $("#goodreads-reviews").offset().top}, 1000,'swing');
+        $('html,body').animate({scrollTop: $("#reviews").offset().top}, 1000,'swing');
     }
 
 ////////////////// SHOWING BOOKS LIST BASE ON SEARCH FROM AUTHOR AUTOCOMPLETE //////////////
@@ -384,7 +384,7 @@ $(function () { // this is the jquery shortcut for document.ready()
 
         $("#award-name").html("<h1>" + awardName + "</h1>");
         // Adding award description and further instructions to the DOM
-        $("#award-info").html(award + "<p>Choose any year button to check the books that were awarded!<p/>");
+        $("#award-info").html(award + "<p>Click year to browse:<p/>");
         // itterating through the years list and adding them as buttons to the DOM
         for (var i = 0; i < years.length -1; i++) {
             $('#award-years').append("<button id="+ years[i] + " data-award=" + years[years.length-1] + " class='year-button'>" + years[i] + "</button>" + "   ");
@@ -480,7 +480,7 @@ $(function () { // this is the jquery shortcut for document.ready()
     });
 
 
-    // ===== Scroll to Top ==== 
+    // ===== Scroll to Top Button ==== 
     $(window).scroll(function() {
         if ($(this).scrollTop() >= 50) {       // If page is scrolled more than 50px
             $('#return-to-top').fadeIn(200);    // Fade in the arrow
@@ -489,10 +489,15 @@ $(function () { // this is the jquery shortcut for document.ready()
         }
     });
 
-    // goes to the top if clicked on the "Top" link in the nav bar
-    // or clicked on the side arrow button
-    $('#top-scroll, #return-to-top').on('click', function(){
+    // goes to the top if clicked on the side arrow button
+    $('#return-to-top').on('click', function(){
         $('html,body').animate({scrollTop: 0}, 1000,'swing');
     });
 
+});
+
+// ===== Scroll to Top When the Page is loaded ==== 
+
+$(document).ready(function(){
+    $('html,body').animate({scrollTop: 0}, 1000,'swing');
 });
