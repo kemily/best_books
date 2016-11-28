@@ -6,6 +6,16 @@ The app improves the original award data by pulling in book and author informati
 
 Best Books was created as a Final Project at Hackbright Academy.
 
-# Technology Stack:
+# Technology Stack
 
-PostgreSQL, SQLAlchemy, Python, Flask, Jinja2, AJAX/JSON, Javascript/JQuery, Bootstrap, unittest.
+* PostgreSQL 
+* SQLAlchemy 
+* Python 
+* Flask 
+* Jinja2
+* AJAX/JSON 
+* Javascript/JQuery 
+* unittest
+* Bootstrap
+* HTML/CSS
+
