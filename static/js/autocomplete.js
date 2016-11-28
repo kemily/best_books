@@ -153,12 +153,12 @@ $(function () { // this is the jquery shortcut for document.ready()
             var book_award = awards[j].award;
             // convirting each award into html element and pushing it
             // to the award_list
-            award_list.push("<span class='book_awards'> "+ year + " by " + book_award +"</span>");
+            award_list.push("<br><span class='book_awards'> "+ year + " from the " + book_award +"</span>");
         }
 
         // joining all the awards elements from the award_list with comma,
         // so this way awards are represented in nice format with commas in the right places
-        var all_book_awards = award_list.join(", ");
+        var all_book_awards = award_list.join(" ");
 
         // if a book doesn't have pages information, then it won't be added to the DOM
         if (pages !== null) {
@@ -171,7 +171,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         $('#description').html(description);
         $('#published').html("Published in " + published);
         $('#genre').html("Genre: " + genre);
-        $('#book_award').html("<b>Book received an award in " + all_book_awards + "</b>");
+        $('#book_award').html("<b>Book received an award in: " + all_book_awards + "</b>");
         
         // adding DOM changes when the book info is shown  
         $("#books-autocomplete").val("");
