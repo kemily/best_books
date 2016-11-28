@@ -155,7 +155,7 @@ a.navbar-brand {
     display: inline-block;
     width: 200px;
     height: 270px;
-    margin: 40px;
+    margin: 40px 80px 40px 0;
 }
 
 .floating-awards img:hover {
