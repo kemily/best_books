@@ -1,4 +1,5 @@
 """Utility file to seed bestbooks database from GoodReads API calls"""
+
 import os
 import sys
 

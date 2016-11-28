@@ -1,4 +1,4 @@
-"""Utility file to seed bestbooks database from bestbooks file in data"""
+"""Utility file to seed bestbooks database from bestbooks data folder """
 import os
 
 import csv
