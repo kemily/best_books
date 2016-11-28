@@ -1,85 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Best Books</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <!-- Jquery autocomplete fields -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat" rel="stylesheet">
-    <!-- Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="static/styles.css">
-</head>
-<body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Best Books</title>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <!-- Jquery autocomplete fields -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat" rel="stylesheet">
+        <!-- Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="static/styles.css">
+    </head>
+    <body>
 
-{% block content %}
-    Put your body here
-{% endblock %}
-
-<footer class="container">
-    <br><br>
-</footer>
+    {% block content %}
+        Put your body here
+    {% endblock %}
 
 <!-- STYLES FOR Goodreads widget -->
 
 <!-- Since Goodreads widget returned from the API call with the styles in it
 we can overwrite them by defining new styles after the widget -->
-<style>
+        <style>
 
-#goodreads-widget {
-    font-family: 'Lato', sans-serif;
-    padding: 18px 0;
-    width: 770px;
-}
+        #goodreads-widget {
+            font-family: 'Lato', sans-serif;
+            padding: 18px 0;
+            width: 770px;
+        }
 
-#goodreads-widget h1 {
-    font-weight: normal;
-    font-size: 16px;
-    border-bottom: 1px solid #1A9CDC;
-    margin-bottom: 0;
-    font-family: 'Montserrat', sans-serif;
-}
-  
-#goodreads-widget a {
-    text-decoration: none;
-    color: #1A9CDC;
-}
-  
-iframe{
-    background-color: #fff;
-}
+        #goodreads-widget h1 {
+            font-weight: normal;
+            font-size: 16px;
+            border-bottom: 1px solid #1A9CDC;
+            margin-bottom: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+          
+        #goodreads-widget a {
+            text-decoration: none;
+            color: #1A9CDC;
+        }
+          
+        iframe{
+            background-color: #fff;
+        }
 
-#goodreads-widget a:hover { 
-    text-decoration: underline; 
-}
-  
-#goodreads-widget a:active {
-    color: #1A9CDC;
-}
+        #goodreads-widget a:hover { 
+            text-decoration: underline; 
+        }
+          
+        #goodreads-widget a:active {
+            color: #1A9CDC;
+        }
 
-#gr_footer {
-    width: 100%;
-    border-top: 1px solid #1A9CDC;
-    text-align: right;
-}
+        #gr_footer {
+            width: 100%;
+            border-top: 1px solid #1A9CDC;
+            text-align: right;
+        }
 
-#goodreads-widget .gr_branding{
-    color: #1A9CDC;
-    font-size: 11px;
-    text-decoration: none;
-    font-family:'Montserrat', sans-serif;
-}
+        #goodreads-widget .gr_branding{
+            color: #1A9CDC;
+            font-size: 11px;
+            text-decoration: none;
+            font-family:'Montserrat', sans-serif;
+        }
 
-</style>
+    </style>
 
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script> <!-- Jquery -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 <script src="/static/js/autocomplete.js"></script> <!-- Jquery Autocomplete widget -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> <!-- Bootstrap -->
-</body>
+
+    </body>
 </html>

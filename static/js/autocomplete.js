@@ -272,7 +272,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         // adding UX functionality when showing author's books
         $("#books").show();
         $("#authors-autocomplete").val("");
-        $('#by-info').html("<h4>Books that were written by "+ author_name +"</h4>");
+        $('#by-info').html("<h4>Award winning books written by "+ author_name +"</h4>");
 
         // itterating through the author's books list and getting the needed info
         for (var i = 0; i < author_books.length; i++) {
