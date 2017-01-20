@@ -239,6 +239,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         
         // adding the widget to the DOM
         $("#goodreads-reviews").html(widget);
+        
 
         // adding animation to scroll to the goodreads reviewswidget 
         $('html,body').animate({scrollTop: $("#reviews").offset().top}, 1000,'swing');
@@ -287,7 +288,7 @@ $(function () { // this is the jquery shortcut for document.ready()
                 image = "https://placekitten.com/g/200/300";
             }
             // creating book html elements and adding them to the DOM
-            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
+            $('#all-books').append("<div id= " + book_id + " class='col-xs-6 col-md-3 col-lg-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
         }
 
         // adding animation to scroll to the chosen author's books 
@@ -342,7 +343,7 @@ $(function () { // this is the jquery shortcut for document.ready()
                 image = "https://placekitten.com/g/200/300";
             }
 
-            $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
+            $('#all-books').append("<div id= " + book_id + " class='col-xs-6 col-md-3 col-lg-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
         }
 
         // adding animation to scroll to the chosen books by genre 
@@ -443,7 +444,7 @@ $(function () { // this is the jquery shortcut for document.ready()
                 image = "https://placekitten.com/g/200/300";
             }
             // adding each book as an html element to the DOM
-            $('#all-books').append("<div id= " + book_id + " class='col-sm-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
+            $('#all-books').append("<div id= " + book_id + " class='col-xs-6 col-md-3 col-lg-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
         }
 
         // adding animation to scroll to the chosen books by chosen award year 

@@ -44,10 +44,19 @@ button:hover {
     background: rgba(191, 191, 191, 0.8);
 }
 
+#awards, #all-books {
+    text-align: center;
+}
+
 .wrapper {
-    width: 770px;
-    margin: 50px auto;
-    /*padding: 20px;*/
+    max-width: 770px;
+    margin: 40px auto;
+    
+    
+}
+
+#books, .wrapper {
+    padding: 0.01em 20px;
 }
 
 /*NAVBAR*/
@@ -177,7 +186,7 @@ a.ui-button:active,
 }
 
 #awards img {
-    width:200px;
+    width:100%;
     border: 0;
 }
 
@@ -249,6 +258,11 @@ a.ui-button:active,
     font-weight: 400;
     margin-bottom: 20px;
     line-height: 1.2em;
+    text-align: left;
+}
+
+#authors {
+    text-align: left;
 }
 
 #book-info img {
