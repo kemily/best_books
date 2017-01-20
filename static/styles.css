@@ -223,6 +223,7 @@ a.ui-button:active,
 
 .book-image {
     width: 140px;
+    height: 200px
 }
 
 .books img:hover {

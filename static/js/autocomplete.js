@@ -272,7 +272,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         // adding UX functionality when showing author's books
         $("#books").show();
         $("#authors-autocomplete").val("");
-        $('#by-info').html("<h4>Award winning books written by "+ author_name +"</h4>");
+        $('#by-info').html("<h4>Award winning books written by "+ author_name +":</h4>");
 
         // itterating through the author's books list and getting the needed info
         for (var i = 0; i < author_books.length; i++) {
@@ -282,9 +282,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             // if a book has no image or has a default no-image cover from goodreads
             // replace it with a kitten image
             if (image === null) {
-                image = "https://placekitten.com/g/100/150";
+                image = "https://placekitten.com/g/200/300";
             } else if (image.includes("/assets/nophoto/book/")) {
-                image = "https://placekitten.com/g/100/150";
+                image = "https://placekitten.com/g/200/300";
             }
             // creating book html elements and adding them to the DOM
             $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
@@ -337,9 +337,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             // if a book has no image or has a default no-image cover from goodreads
             // replace it with a kitten image
             if (image === null) {
-                image = "https://placekitten.com/g/100/150";
+                image = "https://placekitten.com/g/200/300";
             } else if (image.includes("/assets/nophoto/book/")) {
-                image = "https://placekitten.com/g/100/150";
+                image = "https://placekitten.com/g/200/300";
             }
 
             $('#all-books').append("<div id= " + book_id + " class='col-md-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
@@ -410,6 +410,7 @@ $(function () { // this is the jquery shortcut for document.ready()
         
         var award_year = this.id; // this is the id on the year we clicked
         var award_id = $(this).attr("data-award"); //current award id
+        $('#by-info').html("<h4>Award winning books in "+ award_year +":</h4>");
 
         // creating a dictionary of the variables so it will be passed to the server
         var awardInfo = {
@@ -437,9 +438,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             // if a book has no image or has a default no-image cover from goodreads
             // replace it with a kitten image
             if (image === null) {
-                image = "https://placekitten.com/g/100/150";
+                image = "https://placekitten.com/g/200/300";
             } else if (image.includes("/assets/nophoto/book/")) {
-                image = "https://placekitten.com/g/100/150";
+                image = "https://placekitten.com/g/200/300";
             }
             // adding each book as an html element to the DOM
             $('#all-books').append("<div id= " + book_id + " class='col-sm-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
@@ -478,7 +479,6 @@ $(function () { // this is the jquery shortcut for document.ready()
     $('input').focusout(function(){
         $(this).val('');
     });
-
 
     // ===== Scroll to Top Button ==== 
     $(window).scroll(function() {
