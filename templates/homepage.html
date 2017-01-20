@@ -43,17 +43,25 @@
         </div>
     </div>
 
-    <!-- Autocomplete search input fields -->
+
     <div id="search-boxes" class="container">
-        <form>
-            <div class="form-inline">
+        <form class="form-inline">
+            <div class='form-group col-xs-12 col-md-4 col-lg-6'>
                 <label for="books-autocomplete">Search by: </label>
                 <input type="text" name="titles" id="books-autocomplete" class="autocomplete form-control" placeholder="Book title"/>
-                <input type="text" name="names" id="authors-autocomplete" class="form-control autocomplete" placeholder="Author name"/>
-                <input type="text" name="genres" id="genres-autocomplete" class="form-control autocomplete" placeholder="Genres"/>
+            </div>
+            <div class='form-group col-xs-12 col-md-4 col-lg-3'>
+                <label for="authors-autocomplete"></label>
+                    <input type="text" name="names" id="authors-autocomplete" class="form-control autocomplete col" placeholder="Author name"/>
+            </div>
+            <div class='form-group col-xs-12 col-md-4 col-lg-3'>
+                <label for="authors-autocomplete"></label>
+                    <input type="text" name="genres" id="genres-autocomplete" class="form-control autocomplete col" placeholder="Genres"/>
+               
             </div>
         </form>
     </div>
+
     <!-- End of utocomplete search input fields -->
 
     <!-- Awards -->

@@ -126,11 +126,11 @@ a.navbar-brand {
 }
 
 #books-autocomplete {
-    width: 40%;
+    width: 100%;
 }
 
 #genres-autocomplete, #authors-autocomplete {
-    width:20%;
+    width:100%;
 }
 
 .form-inline input {
