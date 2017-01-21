@@ -270,11 +270,14 @@ if __name__ == "__main__":
     # Do not debug for demo
     app.debug = False
 
-    connect_to_db(app)
+    connect_to_db(app, os.environ.get("DATABASE_URL"))
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
     app.jinja_env.auto_reload = True
 
+    DEBUG = "NO_DEBUG" not in os.environ
+    PORT = int(os.environ.get("PORT", 5000))
+
     # app.run()
-    app.run(port=5000, host='0.0.0.0')
+    app.run(host="0.0.0.0", port=PORT, debug=DEBUG)

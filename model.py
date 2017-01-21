@@ -204,10 +204,10 @@ class BookAuthor(db.Model):
 ##############################################################################
 # Helper functions
 
-def connect_to_db(app, db_uri='postgresql:///bestbooks'):
+def connect_to_db(app, db_uri=None):
     """Connect the database to our Flask app."""
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri or 'postgresql:///bestbooks'
 
     # to see all the app sqlalchemy queries when running the file
     # app.config['SQLALCHEMY_ECHO'] = True
