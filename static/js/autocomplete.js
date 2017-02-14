@@ -116,9 +116,9 @@ $(function () { // this is the jquery shortcut for document.ready()
         // if a book has no image or has a default noimage cover from goodreads
         // replace it with the kitten image
         if (image === null) {
-            image = "https://placekitten.com/g/250/400";
+            image = "static/pictures/potap_the_cat2.jpg";
         } else if (image.includes("/assets/nophoto/book/")) {
-            image = "https://placekitten.com/g/250/400";
+            image = "static/pictures/potap_the_cat2.jpg";
         }
 
         // creating an empty list to push our authors element to
@@ -283,9 +283,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             // if a book has no image or has a default no-image cover from goodreads
             // replace it with a kitten image
             if (image === null) {
-                image = "https://placekitten.com/g/200/300";
+                image = "static/pictures/potap_the_cat.jpg";
             } else if (image.includes("/assets/nophoto/book/")) {
-                image = "https://placekitten.com/g/200/300";
+                image = "static/pictures/potap_the_cat.jpg";
             }
             // creating book html elements and adding them to the DOM
             $('#all-books').append("<div id= " + book_id + " class='col-xs-6 col-md-3 col-lg-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
@@ -338,9 +338,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             // if a book has no image or has a default no-image cover from goodreads
             // replace it with a kitten image
             if (image === null) {
-                image = "https://placekitten.com/g/200/300";
+                image = "static/pictures/potap_the_cat.jpg";
             } else if (image.includes("/assets/nophoto/book/")) {
-                image = "https://placekitten.com/g/200/300";
+                image = "static/pictures/potap_the_cat.jpg";
             }
 
             $('#all-books').append("<div id= " + book_id + " class='col-xs-6 col-md-3 col-lg-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
@@ -439,9 +439,9 @@ $(function () { // this is the jquery shortcut for document.ready()
             // if a book has no image or has a default no-image cover from goodreads
             // replace it with a kitten image
             if (image === null) {
-                image = "https://placekitten.com/g/200/300";
+                image = "static/pictures/potap_the_cat.jpg";
             } else if (image.includes("/assets/nophoto/book/")) {
-                image = "https://placekitten.com/g/200/300";
+                image = "static/pictures/potap_the_cat.jpg";
             }
             // adding each book as an html element to the DOM
             $('#all-books').append("<div id= " + book_id + " class='col-xs-6 col-md-3 col-lg-2 books'><img src=" + image + " alt='Pretty book image' class='book-image'><h6>" + title + "</h6></div>");
